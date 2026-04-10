@@ -111,28 +111,29 @@ exports.getAverageRating = async (req, res) => {
   }
 };
 
-exports.getAllRating=async(req,res)=>{
-    try{
-        const allReviews=await RatingAndReview.findOne({}).sort({rating:"desc"}).populate({
-            path:"user",
-            select:"firstName lastName email image "
-        }).populate({
-            path:"course",
-            select:"courseName"
-        }).exec()
+exports.getAllRatingReview= async (req, res) => {
+  try {
+    const allReviews = await RatingAndReview.findOne({})
+      .sort({ rating: "desc" })
+      .populate({
+        path: "user",
+        select: "firstName lastName email image ",
+      })
+      .populate({
+        path: "course",
+        select: "courseName",
+      })
+      .exec();
 
-        return res.status(200).json({
-            success:true,
-            data:allReviews,
-            message:"all reviews fetched successfully"
-        })
-
-    }
-    catch(error){
-        return res.status(500).json({
-          success: false,
-          message: "Error fetching all rating",
-        });
-
-    }
-}
+    return res.status(200).json({
+      success: true,
+      data: allReviews,
+      message: "all reviews fetched successfully",
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: "Error fetching all rating",
+    });
+  }
+};
