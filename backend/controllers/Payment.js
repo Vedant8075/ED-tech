@@ -3,9 +3,7 @@ const Course = require("../models/Course");
 const crypto = require("crypto");
 const User = require("../models/User");
 const mailSender = require("../utils/mailSender");
-const {
-  courseEnrollmentEmail,
-} = require("../mail/templates/courseEnrollmentEmail");
+const { courseEnrollmentEmail } = require("../mail/courseEnrollmentEmail");
 const mongoose = require("mongoose");
 
 exports.capturePayment = async (req, res) => {

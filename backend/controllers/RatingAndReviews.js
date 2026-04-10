@@ -1,4 +1,4 @@
-const RatingAndReview = require("../models/RatingAndReview");
+const RatingAndReview = require("../models/RatingAndReviews");
 const Course = require("../models/Course");
 const mongoose = require("mongoose");
 
@@ -14,9 +14,10 @@ exports.createRating = async (req, res) => {
       });
     }
 
-    const course = await Course.findOne({_id:courseId,
-        studentsEnrolled:userId}
-    );
+    const course = await Course.findOne({
+      _id: courseId,
+      studentsEnrolled: userId,
+    });
 
     if (!course) {
       return res.status(404).json({
@@ -44,7 +45,6 @@ exports.createRating = async (req, res) => {
       course: courseId,
     });
 
-
     await Course.findByIdAndUpdate(courseId, {
       $push: { ratingAndReviews: ratingReview._id },
     });
@@ -62,7 +62,6 @@ exports.createRating = async (req, res) => {
     });
   }
 };
-
 
 exports.getAverageRating = async (req, res) => {
   try {
@@ -111,7 +110,7 @@ exports.getAverageRating = async (req, res) => {
   }
 };
 
-exports.getAllRatingReview= async (req, res) => {
+exports.getAllRatingReview = async (req, res) => {
   try {
     const allReviews = await RatingAndReview.findOne({})
       .sort({ rating: "desc" })

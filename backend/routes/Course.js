@@ -19,7 +19,7 @@ const {
   createSubSection,
   updateSubSection,
   deleteSubSection,
-} = require("../controllers/Subsection");
+} = require("../controllers/SubSection");
 const {
   createRating,
   getAverageRating,
@@ -33,25 +33,20 @@ const {
   isAdmin,
 } = require("../middleware/auth");
 
-
 router.post("/course", auth, isInstructor, createCourse);
 router.get("/courses", getAllCourses);
 router.get("/course/:courseId", getCourseDetails);
 
-
 router.post("/category", auth, isAdmin, createCategory);
 router.get("/categories", showAllCategories);
-
 
 router.post("/section", auth, isInstructor, createSection);
 router.put("/section", auth, isInstructor, updateSection);
 router.delete("/section", auth, isInstructor, deleteSection);
 
-
 router.post("/subsection", auth, isInstructor, createSubSection);
 router.put("/subsection", auth, isInstructor, updateSubSection);
 router.delete("/subsection", auth, isInstructor, deleteSubSection);
-
 
 router.post("/rating", auth, isStudent, createRating);
 router.get("/rating/average", getAverageRating);

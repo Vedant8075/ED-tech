@@ -200,7 +200,7 @@ exports.login = async (req, res) => {
   }
 };
 
-exports.upadatePassword = async (req, res) => {
+exports.updatePassword = async (req, res) => {
   try {
     const { email,otp, oldpassword, newpassword } = req.body;
 
