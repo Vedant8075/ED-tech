@@ -79,7 +79,10 @@ exports.createCourse = async (req, res) => {
 
 exports.getAllCourses = async (req, res) => {
   const courses = await Course.find({})
-    .populate("instructor")
+    .populate({
+      path: "instructor",
+      select: "-password -additionalDetails",
+    })
     .exec();
 
   return res.status(200).json(
@@ -102,9 +105,7 @@ exports.getCourseDetails = async (req, res) => {
     const courseDetails = await Course.findById(courseId)
       .populate({
         path: "instructor",
-        populate: {
-          path: "additionalDetails",
-        },
+        select:"-password -additionalDetails"
       })
       .populate("category")
       .populate("ratingAndReviews")
