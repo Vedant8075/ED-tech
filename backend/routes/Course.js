@@ -44,9 +44,9 @@ router.post("/addSection", auth, isInstructor, createSection);
 router.put("/updateSection", auth, isInstructor, updateSection);
 router.delete("/deleteSection", auth, isInstructor, deleteSection);
 
-router.post("/subsection", auth, isInstructor, createSubSection);
-router.put("/subsection", auth, isInstructor, updateSubSection);
-router.delete("/subsection", auth, isInstructor, deleteSubSection);
+router.post("/addSubSection", auth, isInstructor, createSubSection);
+router.put("/updateSubSection", auth, isInstructor, updateSubSection);
+router.delete("/deleteSubSection", auth, isInstructor, deleteSubSection);
 
 router.post("/createRating", auth, isStudent, createRating);
 router.get("/getAverageRating", getAverageRating);
