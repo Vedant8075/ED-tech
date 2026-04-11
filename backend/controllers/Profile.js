@@ -44,7 +44,6 @@ exports.updateProfile = async (req, res) => {
   }
 };
 
-
 exports.deleteAccount = async (req, res) => {
   try {
     const userId = req.user.id;
@@ -58,8 +57,7 @@ exports.deleteAccount = async (req, res) => {
       });
     }
 
- 
-    await Profile.findByIdAndDelete({_id:user.additionalDetails});
+    await Profile.findByIdAndDelete({ _id: user.additionalDetails });
 
     await Course.updateMany(
       { studentsEnrolled: userId },
@@ -78,6 +76,26 @@ exports.deleteAccount = async (req, res) => {
     return res.status(500).json({
       success: false,
       message: "Error deleting account",
+    });
+  }
+};
+
+exports.getAllUserDetails = async (req, res) => {
+  try {
+    const id = req.user.id;
+    const userDetails = await User.findById(id)
+      .populate("additionalDetails")
+      .exec();
+    console.log(userDetails);
+    res.status(200).json({
+      success: true,
+      message: "User Data fetched successfully",
+      data: userDetails,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
     });
   }
 };

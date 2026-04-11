@@ -4,13 +4,16 @@ const OTPGenerator = require("otp-generator");
 const bcrypt = require("bcrypt");
 const Profile = require("../models/Profile");
 const jwt = require("jsonwebtoken");
-const mailSender = require("../utils/mailSender");
+const { mailSender } = require("../utils/mailSender");
+const { passwordUpdated } = require("../mail/passwordUpdate");
+require("dotenv").config();
 
 exports.sendOtp = async (req, res) => {
   try {
     const { email } = req.body;
 
-    if (User.findOne({ email })) {
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
       return res.status(401).json({
         success: false,
         message: "user already registered",
@@ -31,13 +34,13 @@ exports.sendOtp = async (req, res) => {
       result = await OTP.findOne({ otp: newOTP });
     }
 
-    const otpPayload = { email, newOTP };
+    const otpPayload = { email,otp: newOTP };
     const otpBody = await OTP.create(otpPayload);
+
 
     return res.status(200).json({
       success: true,
-      messgae: "OTP created succesfully",
-      newOTP,
+      message: "OTP sent successfully",
     });
   } catch (error) {
     console.error(error);
@@ -158,7 +161,7 @@ exports.login = async (req, res) => {
     if (!user) {
       return res.status(401).json({
         success: false,
-        message: "user is not signed in",
+        message: "user is not registered ",
       });
     }
 
@@ -202,7 +205,7 @@ exports.login = async (req, res) => {
 
 exports.updatePassword = async (req, res) => {
   try {
-    const { email,otp, oldpassword, newpassword } = req.body;
+    const { email, otp, oldpassword, newpassword } = req.body;
 
     if (!email || !oldpassword || !newpassword) {
       return res.status().json({
@@ -232,13 +235,22 @@ exports.updatePassword = async (req, res) => {
     await user.save();
 
     try {
-      await mailSender(
-        email,
-        "Password Updated Successfully",
-        `Your password has been updated successfully. If this wasn't you, please contact support immediately.`,
+      const emailResponse = await mailSender(
+        updatedUserDetails.email,
+        "Password for your account has been updated",
+        passwordUpdated(
+          updatedUserDetails.email,
+          `Password updated successfully for ${updatedUserDetails.firstName} ${updatedUserDetails.lastName}`,
+        ),
       );
-    } catch (err) {
-      console.log("Email sending failed:", err);
+      console.log("Email sent successfully:", emailResponse.response);
+    } catch (error) {
+      console.error("Error occurred while sending email:", error);
+      return res.status(500).json({
+        success: false,
+        message: "Error occurred while sending email",
+        error: error.message,
+      });
     }
 
     return res.status(200).json({
@@ -253,4 +265,3 @@ exports.updatePassword = async (req, res) => {
     });
   }
 };
-
