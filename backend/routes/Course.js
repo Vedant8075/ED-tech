@@ -33,23 +33,23 @@ const {
   isAdmin,
 } = require("../middleware/auth");
 
-router.post("/course", auth, isInstructor, createCourse);
-router.get("/courses", getAllCourses);
-router.get("/course/:courseId", getCourseDetails);
+router.post("/createCourse", auth, isInstructor, createCourse);
+router.get("/getAllCourses", getAllCourses);
+router.get("/getCourseDetails", getCourseDetails);
 
-router.post("/category", auth, isAdmin, createCategory);
-router.get("/categories", showAllCategories);
+router.post("/createcategory", auth, isAdmin, createCategory);
+router.get("/showAllCategories", showAllCategories);
 
-router.post("/section", auth, isInstructor, createSection);
-router.put("/section", auth, isInstructor, updateSection);
-router.delete("/section", auth, isInstructor, deleteSection);
+router.post("/addSection", auth, isInstructor, createSection);
+router.put("/updateSection", auth, isInstructor, updateSection);
+router.delete("/deleteSection", auth, isInstructor, deleteSection);
 
 router.post("/subsection", auth, isInstructor, createSubSection);
 router.put("/subsection", auth, isInstructor, updateSubSection);
 router.delete("/subsection", auth, isInstructor, deleteSubSection);
 
-router.post("/rating", auth, isStudent, createRating);
-router.get("/rating/average", getAverageRating);
-router.get("/reviews", getAllRatingReview);
+router.post("/createRating", auth, isStudent, createRating);
+router.get("/getAverageRating", getAverageRating);
+router.get("/getReviews", getAllRatingReview);
 
 module.exports = router;

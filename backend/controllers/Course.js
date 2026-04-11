@@ -6,7 +6,7 @@ const {uploadImageToCloudinary} = require("../utils/imageUploader");
 
 exports.createCourse = async (req, res) => {
   try {
-    const { courseName, courseDescription, price, tag , whatYouWillLearn } = req.body;
+    let { courseName, courseDescription, price, tag , whatYouWillLearn,instructions } = req.body;
 
     const thumbnail=req.files.thumbnailImage
 
@@ -16,17 +16,24 @@ exports.createCourse = async (req, res) => {
         message: "Thumbnail image is required",
       });
     }
-    if(!courseName ||  !courseDescription||  !price||  !tag||  !whatYouWillLearn)
-    {
+    if (
+      !courseName ||
+      !courseDescription ||
+      !price ||
+      !tag ||
+      !whatYouWillLearn ||
+      !instructions
+    ) {
       return res.status(400).json({
-        success:false,
-        message:"all fields are required"
-      })
+        success: false,
+        message: "all fields are required",
+      });
     }
 
-    // find id from payload
     const userId=req.user.id 
     const instructorDetails=await User.findById(userId)
+    tag = JSON.parse(req.body.tag);
+    instructions = JSON.parse(req.body.instructions);
 
     if(!instructorDetails)
     {
@@ -36,16 +43,7 @@ exports.createCourse = async (req, res) => {
       })
     }
     
-    const tagDetails=await Tag.findById(tag)
-
-    if(!tagDetails){
-      return res.status(404).json({
-        success: false,
-        message: "tag details not found",
-      });
-    }
-
-    const thumbnailImage = await upload.uploadImageToCloudinary(
+    const thumbnailImage = await uploadImageToCloudinary(
       thumbnail,
       process.env.FOLDER_NAME,
     );
@@ -55,7 +53,8 @@ exports.createCourse = async (req, res) => {
       courseDescription,
       instructor: instructorDetails._id,
       price,
-      tag:tagDetails._id,
+      instructions,
+      tag,
       whatYouWillLearn,
       thumbnail:thumbnailImage.secure_url
     });
@@ -64,17 +63,16 @@ exports.createCourse = async (req, res) => {
        { $push: {Course:newcourse._id}}
     );
 
-    await Tag.findByIdAndUpdate(tagDetails._id, {
-       $push: { course: newcourse._id },
-    });
-
     return res.status(200).json({
       success: true,
       message: "Course created",
       data: newcourse,
     });
   } catch (error) {
-    return res.status(500).json({ success: false });
+    console.log(error)
+    return res.status(500).json({ success: false,
+      message:"course cannot be created atp",
+    });
   }
 };
 
