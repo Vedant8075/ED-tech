@@ -2,6 +2,7 @@ const crypto = require("crypto");
 const User = require("../models/User");
 const mailSender = require("../utils/mailSender");
 const bcrypt=require("bcrypt")
+const {passwordUpdated}=require("../mail/passwordUpdate")
 
 exports.resetPasswordToken = async (req, res) => {
   try {
@@ -20,7 +21,7 @@ exports.resetPasswordToken = async (req, res) => {
         token: token,
         resetPasswordExpires: Date.now() + 5 * 60 * 1000,
       },
-      { new: true },
+      { returnDocument: "after"  },
     );
     const url = `http://localhost:3000/update-password/${token}`;
     await mailSender(
@@ -44,6 +45,7 @@ exports.resetPasswordToken = async (req, res) => {
 
 exports.resetPassword = async (req, res) => {
   try {
+    console.log("hello")
     const { token, newPassword, confirmPassword } = req.body;
 
     if (!token || !newPassword || !confirmPassword) {
@@ -77,16 +79,24 @@ exports.resetPassword = async (req, res) => {
     }
     const hashedPassword = await bcrypt.hash(newPassword, 10);
 
-    await User.findOneAndUpdate(
-      { token: token },
-      {
-        password: hashedPassword,
-        token: undefined,
-        resetPasswordExpires: undefined,
-      },
-      { new: true },
-    );
-
+    user.password = hashedPassword;
+    user.token = undefined;
+    user.resetPasswordExpires = undefined;
+    await user.save();
+    console.log(user.email)
+     try {
+      console.log("Sending reset success mail to:", user.email);
+      await mailSender(
+        user.email,
+        "Password updated successfully",
+        passwordUpdated(
+          user.email,
+          `${user.firstName} ${user.lastName}`
+        )
+      );
+    } catch (error) {
+      console.error("Email failed:", error.message);
+    }
     return res.status(200).json({
       success: true,
       message: "Password reset successful",
