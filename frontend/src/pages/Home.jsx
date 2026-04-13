@@ -5,6 +5,7 @@ import { Link } from "react-router-dom"
 import Banner from "../assets/Images/banner.mp4"
 
 import Footer from "../components/Common/Footer"
+// import ReviewSlider from "../components/Common/ReviewSlider"
 import CTAButton from "../components/core/HomePage/Button"
 import CodeBlocks from "../components/core/HomePage/CodeBlocks"
 import ExploreMore from "../components/core/HomePage/ExploreMore"
@@ -170,6 +171,8 @@ function Home() {
         <h1 className="text-center text-4xl font-semibold mt-8">
           Reviews from other learners
         </h1>
+        {/* <ReviewSlider /> */}
+
       </div>
 
 
