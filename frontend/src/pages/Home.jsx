@@ -1,11 +1,10 @@
-// Icons Import
+
 import { FaArrowRight } from "react-icons/fa"
 import { Link } from "react-router-dom"
 
 import Banner from "../assets/Images/banner.mp4"
 
 import Footer from "../components/Common/Footer"
-// import ReviewSlider from "../components/Common/ReviewSlider"
 import CTAButton from "../components/core/HomePage/Button"
 import CodeBlocks from "../components/core/HomePage/CodeBlocks"
 import ExploreMore from "../components/core/HomePage/ExploreMore"
@@ -27,7 +26,7 @@ function Home() {
           </div>
         </Link>
 
-        <div className="text-center text-4xl font-semibold">
+        <div className="text-center  text-4xl font-semibold">
           Empower Your Future with
           <HighlightText text={"Coding Skills"} />
         </div>
