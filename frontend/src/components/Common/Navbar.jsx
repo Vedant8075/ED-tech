@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react"
 import { AiOutlineMenu, AiOutlineShoppingCart } from "react-icons/ai"
 import { BsChevronDown } from "react-icons/bs"
-import { useSelector } from "react-redux"
 import { Link, matchPath, useLocation } from "react-router-dom"
-
+import {useAuthStore,useCartStore,useProfileStore } from "../../store/useStore"
 import logo from "../../assets/Logo/Logo-Full-Light.png"
 import { NavbarLinks } from "../../data/navbar-links"
 import { apiConnector } from "../../services/apiConnector"
@@ -13,9 +12,9 @@ import ProfileDropdown from "../core/Auth/ProfileDropdown"
 
 
 function Navbar() {
-  const { token } = useSelector((state) => state.auth)
-  const { user } = useSelector((state) => state.profile)
-  const { totalItems } = useSelector((state) => state.cart)
+  const token = useAuthStore((state) => state.token)
+  const user = useProfileStore((state) => state.user)
+  const totalItems = useCartStore((state) => state.totalItems)
   const location = useLocation()
 
   const [subLinks, setSubLinks] = useState([])
@@ -112,7 +111,7 @@ function Navbar() {
             ))}
           </ul>
         </nav>
-        
+        {/* Login / Signup / Dashboard */}
         <div className="hidden items-center gap-x-4 md:flex">
           {user && user?.accountType !== ACCOUNT_TYPE.INSTRUCTOR && (
             <Link to="/dashboard/cart" className="relative">
