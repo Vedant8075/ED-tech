@@ -137,12 +137,12 @@ export async function getPasswordResetToken(email, setEmailSent) {
   useAuthStore.getState().setLoading(false)
 }
 
-export async function resetPassword(password, confirmPassword, token, navigate) {
+export async function resetPassword(newPassword, confirmPassword, token, navigate) {
   const toastId = toast.loading("Loading...")
   useAuthStore.getState().setLoading(true)
   try {
     const response = await apiConnector("POST", RESETPASSWORD_API, {
-      password,
+      newPassword,
       confirmPassword,
       token,
     })

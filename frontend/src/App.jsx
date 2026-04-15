@@ -6,7 +6,7 @@ import Navbar from "./components/Common/Navbar"
 import Login from "./pages/Login"
 import Signup from "./pages/Signup"
 import ForgotPassword from './pages/ForgotPassword';
-
+import UpdatePassword from './pages/UpdatePassword';
 const App = () => {
   return (
     <div className="w-screen min-h-screen bg-richblack-900 flex flex-col font-inter">
@@ -30,6 +30,12 @@ const App = () => {
           path="forgot-password"
           element={
               <ForgotPassword/>
+          }
+        />
+         <Route
+          path="update-password/:id"
+          element={
+              <UpdatePassword />
           }
         />
 
