@@ -5,6 +5,7 @@ import "./App.css";
 import Navbar from "./components/Common/Navbar"
 import Login from "./pages/Login"
 import Signup from "./pages/Signup"
+import ForgotPassword from './pages/ForgotPassword';
 
 const App = () => {
   return (
@@ -25,6 +26,13 @@ const App = () => {
               <Signup/>
           }
         />
+        <Route
+          path="forgot-password"
+          element={
+              <ForgotPassword/>
+          }
+        />
+
       </Routes>
     </div>
   )
