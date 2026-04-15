@@ -1,22 +1,26 @@
 import { useEffect, useState } from "react";
 import OtpInput from "react-otp-input";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { BiArrowBack } from "react-icons/bi";
 import { RxCountdownTimer } from "react-icons/rx";
+
+import { useAuthStore } from "../store/useStore"; 
 import { sendOtp, signUp } from "../services/operations/authAPI";
-import { useNavigate } from "react-router-dom";
-import { useAuthStore } from "../store/useStore";
+
 function VerifyEmail() {
   const [otp, setOtp] = useState("");
-  const {signupData} = useAuthStore((state) => state.signupData);
-  const {loading}=useAuthStore((state)=>state.loading)
   const navigate = useNavigate();
 
+
+  const signupData = useAuthStore((state) => state.signupData);
+  const loading = useAuthStore((state) => state.loading);
+
   useEffect(() => {
+   
     if (!signupData) {
       navigate("/signup");
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
   }, []);
 
   const handleVerifyAndSignup = (e) => {
@@ -30,15 +34,16 @@ function VerifyEmail() {
       confirmPassword,
     } = signupData;
 
-      signUp(
-        accountType,
-        firstName,
-        lastName,
-        email,
-        password,
-        confirmPassword,
-        otp,
-        navigate
+    // 3. Removed dispatch() wrapper. Call the API function directly.
+    signUp(
+      accountType,
+      firstName,
+      lastName,
+      email,
+      password,
+      confirmPassword,
+      otp,
+      navigate
     );
   };
 
@@ -91,8 +96,9 @@ function VerifyEmail() {
             </Link>
             <button
               className="flex items-center text-blue-100 gap-x-2"
-              onClick={() => sendOtp(signupData.email)}
-            >                                                                  
+              // 4. Removed dispatch here too, and added navigate since sendOtp requires it
+              onClick={() => sendOtp(signupData.email, navigate)} 
+            >
               <RxCountdownTimer />
               Resend it
             </button>
