@@ -8,7 +8,7 @@ import { NavbarLinks } from "../../data/navbar-links"
 import { apiConnector } from "../../services/apiConnector"
 import { categories } from "../../services/apis"
 import { ACCOUNT_TYPE } from "../../utils/constants"
-// import ProfileDropdown from "../core/Auth/ProfileDropdown"
+import {ProfileDropdown} from "../core/Auth/ProfileDropdown"
 
 
 function Navbar() {
@@ -136,6 +136,7 @@ console.log(subLinks)
               </button>
             </Link>
           )}
+          {token !== null && <ProfileDropdown />}
         </div>
         <button className="mr-4 md:hidden">
           <AiOutlineMenu fontSize={24} fill="#AFB2BF" />
