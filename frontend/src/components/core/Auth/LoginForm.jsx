@@ -1,7 +1,6 @@
 import { useState } from "react"
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai"
 import { Link, useNavigate } from "react-router-dom"
-
 import { login } from "../../../services/operations/authAPI"
 
 function LoginForm() {
@@ -22,7 +21,7 @@ function LoginForm() {
     }))
   }
 
-  const handleOnSubmit = (e) => {
+const handleOnSubmit = (e) => {
     e.preventDefault()
     login(email, password, navigate)
   }
