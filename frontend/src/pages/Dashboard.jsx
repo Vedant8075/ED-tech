@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom"
 import Sidebar from "../components/core/Dashboard/Sidebar"
 
-import { useAuthStore, useProfileStore } from "../../store/useStore" 
+import { useAuthStore, useProfileStore } from "./../store/useStore" 
 
 function Dashboard() {
   const profileLoading = useProfileStore((state) => state.loading)
