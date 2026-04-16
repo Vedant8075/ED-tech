@@ -1,7 +1,7 @@
 import { RiEditBoxLine } from "react-icons/ri"
 import { useNavigate } from "react-router-dom"
 import {useProfileStore} from "../../../store/useStore"
-// import { formattedDate } from "../../../utils/dateFormatter"
+import { formattedDate } from "../../../utils/dateFormatter"
 import IconBtn from "../../Common/IconBtn"
 
 export default function MyProfile() {
@@ -107,11 +107,11 @@ export default function MyProfile() {
               </p>
             </div>
             <div>
-              {/* <p className="mb-2 text-sm text-richblack-600">Date Of Birth</p>
+              <p className="mb-2 text-sm text-richblack-600">Date Of Birth</p>
               <p className="text-sm font-medium text-richblack-5">
                 {formattedDate(user?.additionalDetails?.dateOfBirth) ??
                   "Add Date Of Birth"}
-              </p> */}
+              </p>
             </div>
           </div>
         </div>

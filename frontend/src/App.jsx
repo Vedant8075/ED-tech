@@ -10,6 +10,8 @@ import VerifyEmail from "./pages/VerifyEmail"
 import Dashboard from "./pages/Dashboard"
 import About from "./pages/About"
 import MyProfile from "./components/core/Dashboard/MyProfile"
+import OpenRoute from "./components/core/Auth/OpenRoute"
+import PrivateRoute from "./components/core/Auth/PrivateRoute"
 const App = () => {
   return (
     <div className="w-screen min-h-screen bg-richblack-900 flex flex-col font-inter">
@@ -20,42 +22,41 @@ const App = () => {
           <Route
           path="login"
           element={
+            <OpenRoute>
               <Login />
+            </OpenRoute>
           }
         />
         <Route
           path="signup"
           element={
-              <Signup/>
+              <OpenRoute>
+              <Signup />
+             </OpenRoute>
           }
         />
         <Route
           path="forgot-password"
           element={
-              <ForgotPassword/>
+            <OpenRoute>
+              <ForgotPassword />
+            </OpenRoute>
           }
         />
-        <Route
-          element={
-              <Dashboard />
-          }
-        ></Route>
          <Route
           path="update-password/:id"
           element={
+             <OpenRoute>
               <UpdatePassword />
-          }
-        />
-        <Route
-          path="update-password/:id"
-          element={
-              <UpdatePassword />
+            </OpenRoute>
           }
         />
         <Route
           path="verify-email"
           element={
-             <VerifyEmail/>
+              <OpenRoute>
+              <VerifyEmail />
+            </OpenRoute>
           }
         />
         <Route
@@ -64,7 +65,15 @@ const App = () => {
             <About/>             
           }
         />
+        <Route
+          element={
+              <PrivateRoute>
+              <Dashboard />
+            </PrivateRoute>
+          }
+        >
         <Route path="dashboard/my-profile" element ={<MyProfile></MyProfile>}/>
+        </Route>
       </Routes>
     </div>
   )
