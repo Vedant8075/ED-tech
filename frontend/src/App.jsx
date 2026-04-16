@@ -58,6 +58,7 @@ const App = () => {
             <About/>             
           }
         />
+        <Route path="dashboard/my-profile" element ={<MyProfile></MyProfile>}/>
 
 
 
