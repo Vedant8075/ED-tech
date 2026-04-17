@@ -71,7 +71,7 @@ export async function updateProfile(token, formData) {
   toast.dismiss(toastId)
 }
 
-//
+
 export async function changePassword(token, formData) {
   const toastId = toast.loading("Loading...")
   try {
@@ -93,6 +93,7 @@ export async function changePassword(token, formData) {
 
 export async function deleteProfile(token, navigate) {
   const toastId = toast.loading("Loading...")
+  console.log(token)
   try {
     const response = await apiConnector("DELETE", DELETE_PROFILE_API, null, {
       Authorization: `Bearer ${token}`,
@@ -107,6 +108,7 @@ export async function deleteProfile(token, navigate) {
     logout(navigate)
   } catch (error) {
     console.log("DELETE_PROFILE_API API ERROR............", error)
+    console.log(error)
     toast.error("Could Not Delete Profile")
   }
   toast.dismiss(toastId)

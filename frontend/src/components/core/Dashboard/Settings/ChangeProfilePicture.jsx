@@ -2,14 +2,14 @@ import { useEffect, useRef, useState } from "react"
 import { FiUpload } from "react-icons/fi"
 import { updateDisplayPicture } from "../../../../services/operations/SettingsAPI"
 import IconBtn from "../../../Common/IconBtn"
-import { useAuthStore } from "../../../../stores/useAuthStore" 
-import { useProfileStore } from "../../../../stores/useProfileStore"
+import { useAuthStore } from "../../../../store/useStore"
+import { useProfileStore } from "../../../../store/useStore"
 
 export default function ChangeProfilePicture() {
   const token = useAuthStore((state) => state.token)
   const user = useProfileStore((state) => state.user)
   const setUser = useProfileStore((state) => state.setUser) 
-
+   
   const [loading, setLoading] = useState(false)
   const [imageFile, setImageFile] = useState(null)
   const [previewSource, setPreviewSource] = useState(null)

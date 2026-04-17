@@ -2,8 +2,8 @@ import { useForm } from "react-hook-form"
 import { useNavigate } from "react-router-dom"
 import { updateProfile } from "../../../../services/operations/SettingsAPI"
 import IconBtn from "../../../Common/IconBtn"
-import { useAuthStore } from "../../../../stores/useAuthStore"
-import { useProfileStore } from "../../../../stores/useProfileStore"
+import { useAuthStore } from "../../../../store/useStore"
+import { useProfileStore } from "../../../../store/useStore"
 
 const genders = ["Male", "Female", "Non-Binary", "Prefer not to say", "Other"]
 
@@ -18,7 +18,6 @@ export default function EditProfile() {
   const {
     register,
     handleSubmit,
-    // automatic data bundling
     formState: { errors },
   } = useForm()
 
