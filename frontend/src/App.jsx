@@ -76,6 +76,7 @@ const App = () => {
         <Route path="dashboard/my-profile" element ={<MyProfile></MyProfile>}/>
         <Route path="dashboard/settings" element={<Settings></Settings>}/>
         </Route>
+        <Route path="*" element={<Error />} />
       </Routes>
     </div>
   )
