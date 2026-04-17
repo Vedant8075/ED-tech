@@ -34,7 +34,6 @@ function VerifyEmail() {
       confirmPassword,
     } = signupData;
 
-    // 3. Removed dispatch() wrapper. Call the API function directly.
     signUp(
       accountType,
       firstName,
