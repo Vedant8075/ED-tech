@@ -5,10 +5,11 @@ import { useNavigate } from "react-router-dom"
 
 import { changePassword } from "../../../../services/operations/SettingsAPI"
 import IconBtn from "../../../Common/IconBtn"
-import { useAuthStore } from "../../../../store/useStore"
+import { useAuthStore, useProfileStore } from "../../../../store/useStore"
 
 export default function UpdatePassword() {
-  const token=useAuthStore((state)=>state.token)
+  const token = useAuthStore((state) => state.token)
+  const user = useProfileStore((state) => state.user) 
   const navigate = useNavigate()
 
   const [showOldPassword, setShowOldPassword] = useState(false)
@@ -22,7 +23,10 @@ export default function UpdatePassword() {
 
   const submitPasswordForm = async (data) => {
     try {
-       changePassword(token, data)
+      const formData = { ...data, email: user?.email }
+      console.log("SENDING PASSWORD DATA:", formData)
+      
+      await changePassword(token, formData)
     } catch (error) {
       console.log("ERROR MESSAGE - ", error.message)
     }
@@ -34,17 +38,19 @@ export default function UpdatePassword() {
         <div className="my-10 flex flex-col gap-y-6 rounded-md border-[1px] border-richblack-700 bg-richblack-800 p-8 px-12">
           <h2 className="text-lg font-semibold text-richblack-5">Password</h2>
           <div className="flex flex-col gap-5 lg:flex-row">
+            
+            {/* Current Password */}
             <div className="relative flex flex-col gap-2 lg:w-[48%]">
-              <label htmlFor="oldPassword" className="lable-style">
+              <label htmlFor="oldpassword" className="lable-style">
                 Current Password
               </label>
               <input
                 type={showOldPassword ? "text" : "password"}
-                name="oldPassword"
-                id="oldPassword"
+                name="oldpassword"
+                id="oldpassword"
                 placeholder="Enter Current Password"
                 className="form-style"
-                {...register("oldPassword", { required: true })}
+                {...register("oldpassword", { required: true })}
               />
               <span
                 onClick={() => setShowOldPassword((prev) => !prev)}
@@ -56,23 +62,25 @@ export default function UpdatePassword() {
                   <AiOutlineEye fontSize={24} fill="#AFB2BF" />
                 )}
               </span>
-              {errors.oldPassword && (
+              {errors.oldpassword && (
                 <span className="-mt-1 text-[12px] text-yellow-100">
                   Please enter your Current Password.
                 </span>
               )}
             </div>
+
+            {/* New Password */}
             <div className="relative flex flex-col gap-2 lg:w-[48%]">
-              <label htmlFor="newPassword" className="lable-style">
+              <label htmlFor="newpassword" className="lable-style">
                 New Password
               </label>
               <input
                 type={showNewPassword ? "text" : "password"}
-                name="newPassword"
-                id="newPassword"
+                name="newpassword"
+                id="newpassword"
                 placeholder="Enter New Password"
                 className="form-style"
-                {...register("newPassword", { required: true })}
+                {...register("newpassword", { required: true })}
               />
               <span
                 onClick={() => setShowNewPassword((prev) => !prev)}
@@ -84,14 +92,16 @@ export default function UpdatePassword() {
                   <AiOutlineEye fontSize={24} fill="#AFB2BF" />
                 )}
               </span>
-              {errors.newPassword && (
+              {errors.newpassword && (
                 <span className="-mt-1 text-[12px] text-yellow-100">
                   Please enter your New Password.
                 </span>
               )}
             </div>
+            
           </div>
         </div>
+
         <div className="flex justify-end gap-2">
           <button
             onClick={() => {
