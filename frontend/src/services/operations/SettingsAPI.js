@@ -53,15 +53,24 @@ export async function updateProfile(token, formData) {
     if (!response.data.success) {
       throw new Error(response.data.message)
     }
-    
-    const userImage = response.data.updatedUserDetails.image
-      ? response.data.updatedUserDetails.image
-      : `https://api.dicebear.com/5.x/initials/svg?seed=${response.data.updatedUserDetails.firstName} ${response.data.updatedUserDetails.lastName}`
+
+    const profileData = response.data.data;     
+    const currentUser = useProfileStore.getState().user;
+
+    const userImage = profileData.image
+      ? profileData.image
+      : `https://api.dicebear.com/5.x/initials/svg?seed=${currentUser?.firstName} ${currentUser?.lastName}`
+  
       
-    useProfileStore.getState().setUser({ 
-      ...response.data.updatedUserDetails, 
-      image: userImage 
-    })
+    const updatedUser = { 
+    ...currentUser, 
+    additionalDetails: {
+      ...currentUser?.additionalDetails,
+      ...profileData, 
+    },
+  };
+
+  useProfileStore.getState().setUser(updatedUser);
     
     toast.success("Profile Updated Successfully")
   } catch (error) {
