@@ -1,14 +1,14 @@
 import { toast } from "react-hot-toast"
 import { apiConnector } from "../apiConnector"
 import { courseEndpoints } from "../apis"
-import { useCourseStore } from "../../../../store/useStore"
+import { useCourseStore } from "../../store/useStore"
 
 const {
   COURSE_DETAILS_API,
   COURSE_CATEGORIES_API,
   GET_ALL_COURSE_API,
   CREATE_COURSE_API,
-//   EDIT_COURSE_API,
+  EDIT_COURSE_API,
   CREATE_SECTION_API,
   CREATE_SUBSECTION_API,
   UPDATE_SECTION_API,
@@ -103,26 +103,26 @@ export const addCourseDetails = async (data, token) => {
   return result
 }
 
-// export const editCourseDetails = async (data, token) => {
-//   let result = null
-//   const toastId = toast.loading("Loading...")
-//   try {
-//     const response = await apiConnector("POST", EDIT_COURSE_API, data, {
-//       "Content-Type": "multipart/form-data",
-//       Authorization: `Bearer ${token}`,
-//     })
-//     if (!response?.data?.success) {
-//       throw new Error("Could Not Update Course Details")
-//     }
-//     toast.success("Course Details Updated Successfully")
-//     result = response?.data?.data
-//   } catch (error) {
-//     console.log("EDIT COURSE API ERROR............", error)
-//     toast.error(error.message)
-//   }
-//   toast.dismiss(toastId)
-//   return result
-// }
+export const editCourseDetails = async (data, token) => {
+  let result = null
+  const toastId = toast.loading("Loading...")
+  try {
+    const response = await apiConnector("POST", EDIT_COURSE_API, data, {
+      "Content-Type": "multipart/form-data",
+      Authorization: `Bearer ${token}`,
+    })
+    if (!response?.data?.success) {
+      throw new Error("Could Not Update Course Details")
+    }
+    toast.success("Course Details Updated Successfully")
+    result = response?.data?.data
+  } catch (error) {
+    console.log("EDIT COURSE API ERROR............", error)
+    toast.error(error.message)
+  }
+  toast.dismiss(toastId)
+  return result
+}
 
 export const createSection = async (data, token) => {
   let result = null

@@ -9,10 +9,11 @@ import {
   editCourseDetails,
   fetchCourseCategories,
 } from "../../../../../services/operations/courseDetailsAPI"
+
 import { useAuthStore, useCourseStore } from "../../../../../store/useStore"
 import { COURSE_STATUS } from "../../../../../utils/constants"
 import IconBtn from "../../../../Common/IconBtn"
-import Upload from "../Upload"
+// import Upload from "../Upload"
 import ChipInput from "./ChipInput"
 import RequirementsField from "./RequirementsField"
 
@@ -26,12 +27,11 @@ export default function CourseInformationForm() {
   } = useForm()
 
   const token = useAuthStore((state) => state.token)
-  const { course, editCourse, setCourse, setStep } = useCourseStore((state) => ({
-    course: state.course,
-    editCourse: state.editCourse,
-    setCourse: state.setCourse,
-    setStep: state.setStep,
-  }))
+  // ✅ Best Practice
+    const course = useCourseStore((state) => state.course);
+    const editCourse = useCourseStore((state) => state.editCourse);
+    const setCourse = useCourseStore((state) => state.setCourse);
+    const setStep = useCourseStore((state) => state.setStep);
 
   const [loading, setLoading] = useState(false)
   const [courseCategories, setCourseCategories] = useState([])
@@ -258,14 +258,14 @@ export default function CourseInformationForm() {
       />
 
       {/* Course Thumbnail Image */}
-      <Upload
+      {/* <Upload
         name="courseImage"
         label="Course Thumbnail"
         register={register}
         setValue={setValue}
         errors={errors}
         editData={editCourse ? course?.thumbnail : null}
-      />
+      /> */}
 
       {/* Benefits of the course */}
       <div className="flex flex-col space-y-2">
@@ -285,7 +285,6 @@ export default function CourseInformationForm() {
         )}
       </div>
 
-      {/* Requirements/Instructions */}
       <RequirementsField
         name="courseRequirements"
         label="Requirements/Instructions"
