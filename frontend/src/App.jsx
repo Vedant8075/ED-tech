@@ -13,7 +13,12 @@ import Settings from "./components/core/Dashboard/Settings"
 import MyProfile from "./components/core/Dashboard/MyProfile"
 import OpenRoute from "./components/core/Auth/OpenRoute"
 import PrivateRoute from "./components/core/Auth/PrivateRoute"
+import EnrolledCourses from "./components/core/Dashboard/EnrolledCourses"
+
+
 const App = () => {
+
+
   return (
     <div className="w-screen min-h-screen bg-richblack-900 flex flex-col font-inter">
       <Navbar>
@@ -75,6 +80,8 @@ const App = () => {
         >
         <Route path="dashboard/my-profile" element ={<MyProfile></MyProfile>}/>
         <Route path="dashboard/settings" element={<Settings></Settings>}/>
+        <Route  path="dashboard/enrolled-courses"  element={<EnrolledCourses />}
+              />
         </Route>
         <Route path="*" element={<Error />} />
       </Routes>
