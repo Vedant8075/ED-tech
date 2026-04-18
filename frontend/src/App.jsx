@@ -14,8 +14,8 @@ import MyProfile from "./components/core/Dashboard/MyProfile"
 import OpenRoute from "./components/core/Auth/OpenRoute"
 import PrivateRoute from "./components/core/Auth/PrivateRoute"
 import EnrolledCourses from "./components/core/Dashboard/EnrolledCourses"
-
-
+import Cart from "./components/core/Dashboard/Cart"
+import AddCourse from "./components/core/Dashboard/AddCourse";
 const App = () => {
 
 
@@ -80,8 +80,9 @@ const App = () => {
         >
         <Route path="dashboard/my-profile" element ={<MyProfile></MyProfile>}/>
         <Route path="dashboard/settings" element={<Settings></Settings>}/>
-        <Route  path="dashboard/enrolled-courses"  element={<EnrolledCourses />}
-              />
+        <Route path="dashboard/cart" element={<Cart></Cart>}/>
+        <Route  path="dashboard/enrolled-courses"  element={<EnrolledCourses />}  />
+        <Route  path="dashboard/add-course"  element={<AddCourse></AddCourse>}  />
         </Route>
         <Route path="*" element={<Error />} />
       </Routes>

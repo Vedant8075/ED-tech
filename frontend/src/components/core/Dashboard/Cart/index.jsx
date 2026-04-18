@@ -1,5 +1,5 @@
 import RenderCartCourses from "./RenderCartCourses"
-import RenderTotalAmount from "./RenderTotalAmount"
+import RenderTotalAmount from "./ResetTotalAmount"
 import { useCartStore } from "../../../../store/useStore"
 import { useCourseStore } from "../../../../store/useStore"
 export default function Cart() {
