@@ -4,7 +4,10 @@ import ReactStars from "react-rating-stars-component"
 import { useCartStore } from "../../../../store/useStore"
 
 export default function RenderCartCourses() {
-  const cart  = useCartStore((state)=>(state.cart))
+  const { cart, removeFromCart } = useCartStore((state) => ({
+  cart: state.cart,
+  removeFromCart: state.removeFromCart
+   }));
   return (
     <div className="flex flex-1 flex-col">
       {cart.map((course, indx) => (
@@ -46,7 +49,7 @@ export default function RenderCartCourses() {
           </div>
           <div className="flex flex-col items-end space-y-2">
             <button
-              onClick={() => dispatch(removeFromCart(course._id))}
+              onClick={() => removeFromCart(course._id)}
               className="flex items-center gap-x-1 rounded-md border border-richblack-600 bg-richblack-700 py-3 px-[12px] text-pink-200"
             >
               <RiDeleteBin6Line />
