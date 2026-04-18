@@ -1,4 +1,4 @@
-import React from "react" // Import React to use Fragment
+import React from "react" 
 import { FaCheck } from "react-icons/fa"
 import CourseInformationForm from "./CourseInformation/CourseInformationForm"
 import { useCourseStore } from "../../../../store/useStore"

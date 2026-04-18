@@ -13,7 +13,7 @@ import {
 import { useAuthStore, useCourseStore } from "../../../../../store/useStore"
 import { COURSE_STATUS } from "../../../../../utils/constants"
 import IconBtn from "../../../../Common/IconBtn"
-// import Upload from "../Upload"
+import Upload from "../Upload"
 import ChipInput from "./ChipInput"
 import RequirementsField from "./RequirementsField"
 
@@ -26,8 +26,7 @@ export default function CourseInformationForm() {
     formState: { errors },
   } = useForm()
 
-  const token = useAuthStore((state) => state.token)
-  // ✅ Best Practice
+    const token = useAuthStore((state) => state.token)
     const course = useCourseStore((state) => state.course);
     const editCourse = useCourseStore((state) => state.editCourse);
     const setCourse = useCourseStore((state) => state.setCourse);
@@ -60,7 +59,7 @@ export default function CourseInformationForm() {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-
+  // compares current form value and original course
   const isFormUpdated = () => {
     const currentValues = getValues()
     if (
@@ -83,7 +82,7 @@ export default function CourseInformationForm() {
     if (editCourse) {
       if (isFormUpdated()) {
         const currentValues = getValues()
-        const formData = new FormData()
+        const formData  = new FormData()
 
         formData.append("courseId", course._id)
         if (currentValues.courseTitle !== course.courseName) {
@@ -258,14 +257,14 @@ export default function CourseInformationForm() {
       />
 
       {/* Course Thumbnail Image */}
-      {/* <Upload
+      <Upload
         name="courseImage"
         label="Course Thumbnail"
         register={register}
         setValue={setValue}
         errors={errors}
         editData={editCourse ? course?.thumbnail : null}
-      /> */}
+      />
 
       {/* Benefits of the course */}
       <div className="flex flex-col space-y-2">
