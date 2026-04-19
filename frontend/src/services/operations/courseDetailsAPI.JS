@@ -105,6 +105,7 @@ export const addCourseDetails = async (data, token) => {
 
 export const editCourseDetails = async (data, token) => {
   let result = null
+  console.log(data)
   const toastId = toast.loading("Loading...")
   try {
     const response = await apiConnector("POST", EDIT_COURSE_API, data, {
@@ -116,6 +117,7 @@ export const editCourseDetails = async (data, token) => {
     }
     toast.success("Course Details Updated Successfully")
     result = response?.data?.data
+    console.log(result)
   } catch (error) {
     console.log("EDIT COURSE API ERROR............", error)
     toast.error(error.message)

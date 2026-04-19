@@ -183,8 +183,7 @@ exports.editCourse = async (req, res) => {
 
     await course.save()
 
-    // 4. Return the fully populated course
-    const updatedCourse = await Course.findById(courseId) // Simplified from findOne
+    const updatedCourse = await Course.findById(courseId) 
       .populate({
         path: "instructor",
         populate: { path: "additionalDetails" },
