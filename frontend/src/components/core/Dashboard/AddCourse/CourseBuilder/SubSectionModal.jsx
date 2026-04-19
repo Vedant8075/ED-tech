@@ -90,7 +90,6 @@ export default function SubSectionModal({
     setLoading(false)
   }
 
-  // 🟢 SUBMIT HANDLER
   const onSubmit = async (data) => {
     if (view) return
 
@@ -103,7 +102,6 @@ export default function SubSectionModal({
       return
     }
 
-    // ➕ ADD MODE
     const formData = new FormData()
     formData.append("sectionId", modalData)
     formData.append("title", data.lectureTitle)

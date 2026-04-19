@@ -146,7 +146,6 @@ export const createSection = async (data, token) => {
 
 export const createSubSection = async (data, token) => {
   let result = null
-  console.log(token)
   const toastId = toast.loading("Loading...")
   try {
     const response = await apiConnector("POST", CREATE_SUBSECTION_API, data, {
@@ -230,7 +229,7 @@ export const deleteSubSection = async (data, token) => {
   let result = null
   const toastId = toast.loading("Loading...")
   try {
-    const response = await apiConnector("POST", DELETE_SUBSECTION_API, data, {
+    const response = await apiConnector("DELETE", DELETE_SUBSECTION_API, data, {
       Authorization: `Bearer ${token}`,
     })
     if (!response?.data?.success) {

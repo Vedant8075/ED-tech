@@ -5,41 +5,43 @@ require("dotenv").config()
 
 exports.createSubSection = async (req, res) => {
   try {
-    const { title, description, timeDuration , sectionId } = req.body;
-
-    const video=req.files.videoFile
-
-    if (!title || !description || !timeDuration || !sectionId || !video ) {
+    const { title, description, timeDuration, sectionId, courseId } = req.body;
+    const video = req.files.videoFile;
+    if (!title || !description || !timeDuration || !sectionId || !video) {
       return res.status(400).json({
         success: false,
-        message: "missing properties",
+        message: "Missing properties",
       });
     }
 
-    const uploadDetails=await uploadImageToCloudinary(video,process.env.FOLDER_NAME)
+    const uploadDetails = await uploadImageToCloudinary(video, process.env.FOLDER_NAME);
+
 
     const subSection = await SubSection.create({
       title,
       description,
       timeDuration,
-      videoUrl:uploadDetails.secure_url
+      videoUrl: uploadDetails.secure_url,
     });
 
-    const updatedSection = await Section.findByIdAndUpdate(
+
+    const updatedCourse = await Section.findByIdAndUpdate(
       { _id: sectionId },
-      { $push: { subSection: SubSectionDetails._id } },
+      { $push: { subSection: subSection._id } }, 
       { new: true }
-    ).populate("subSection")
+    ).populate("subSection");
 
     return res.json({
       success: true,
-      message: "Lecture added",
-      data: updatedSection,
+      message: "Lecture added successfully",
+      data: updatedCourse, 
     });
   } catch (error) {
-    res.status(500).json({ success: false,
-        message:"subsection cannot be created"
-     });
+    res.status(500).json({ 
+      success: false, 
+      message: "Subsection cannot be created",
+      error: error.message 
+    });
   }
 };
 
@@ -55,12 +57,6 @@ exports.updateSubSection = async (req, res) => {
     }
 
     const subSection = await SubSection.findById(subSectionId);
-    if (!subSection) {
-      return res.status(404).json({
-        success: false,
-        message: "SubSection not found",
-      });
-    }
 
     const updateFields = {};
     if (title) updateFields.title = title;
