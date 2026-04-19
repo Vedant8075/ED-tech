@@ -25,14 +25,16 @@ exports.createSubSection = async (req, res) => {
       videoUrl:uploadDetails.secure_url
     });
 
-    await Section.findByIdAndUpdate({_id:sectionId}, {
-      $push: { subSection: subSection._id },
-    },{new:true});
+    const updatedSection = await Section.findByIdAndUpdate(
+      { _id: sectionId },
+      { $push: { subSection: SubSectionDetails._id } },
+      { new: true }
+    ).populate("subSection")
 
     return res.json({
       success: true,
       message: "Lecture added",
-      data: subSection,
+      data: updatedSection,
     });
   } catch (error) {
     res.status(500).json({ success: false,

@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react"
+// Import Zustand hook
 import { useCourseStore } from "../../../../../store/useStore"
+
 export default function RequirementsField({
   name,
   label,
@@ -8,16 +10,23 @@ export default function RequirementsField({
   errors,
   getValues,
 }) {
- const course = useCourseStore((state) => state.course);
- const editCourse = useCourseStore((state) => state.editCourse);
+  // Use Zustand selectors
+  const editCourse = useCourseStore((state) => state.editCourse)
+  const course = useCourseStore((state) => state.course)
+
   const [requirement, setRequirement] = useState("")
+  // Initialize as empty array to prevent .length / .map errors
   const [requirementsList, setRequirementsList] = useState([])
 
   useEffect(() => {
-    if (editCourse) {
-      setRequirementsList(course?.instructions)
+    if (editCourse && course) {
+      // Ensure we provide a fallback empty array if instructions is null
+      setRequirementsList(course?.instructions || [])
     }
-    register(name, { required: true, validate: (value) => value.length > 0 })
+    register(name, { 
+      required: true, 
+      validate: (value) => value?.length > 0 
+    })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -28,13 +37,14 @@ export default function RequirementsField({
 
   const handleAddRequirement = () => {
     if (requirement) {
-      setRequirementsList([...requirementsList, requirement])
+      // Safe spreading
+      setRequirementsList([...(requirementsList || []), requirement])
       setRequirement("")
     }
   }
 
   const handleRemoveRequirement = (index) => {
-    const updatedRequirements = [...requirementsList]
+    const updatedRequirements = [...(requirementsList || [])]
     updatedRequirements.splice(index, 1)
     setRequirementsList(updatedRequirements)
   }
@@ -60,11 +70,13 @@ export default function RequirementsField({
           Add
         </button>
       </div>
-      {requirementsList.length > 0 && (
+
+      {/* FIXED: Optional chaining on requirementsList */}
+      {requirementsList?.length > 0 && (
         <ul className="mt-2 list-inside list-disc">
-          {requirementsList.map((requirement, index) => (
+          {requirementsList?.map((item, index) => (
             <li key={index} className="flex items-center text-richblack-5">
-              <span>{requirement}</span>
+              <span>{item}</span>
               <button
                 type="button"
                 className="ml-2 text-xs text-pure-greys-300 "
@@ -76,6 +88,7 @@ export default function RequirementsField({
           ))}
         </ul>
       )}
+      
       {errors[name] && (
         <span className="ml-2 text-xs tracking-wide text-pink-200">
           {label} is required

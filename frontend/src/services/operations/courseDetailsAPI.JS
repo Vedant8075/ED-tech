@@ -146,6 +146,7 @@ export const createSection = async (data, token) => {
 
 export const createSubSection = async (data, token) => {
   let result = null
+  console.log(token)
   const toastId = toast.loading("Loading...")
   try {
     const response = await apiConnector("POST", CREATE_SUBSECTION_API, data, {
@@ -167,8 +168,9 @@ export const createSubSection = async (data, token) => {
 export const updateSection = async (data, token) => {
   let result = null
   const toastId = toast.loading("Loading...")
+  console.log(data)
   try {
-    const response = await apiConnector("POST", UPDATE_SECTION_API, data, {
+    const response = await apiConnector("PUT", UPDATE_SECTION_API, data, {
       Authorization: `Bearer ${token}`,
     })
     if (!response?.data?.success) {
@@ -188,7 +190,7 @@ export const updateSubSection = async (data, token) => {
   let result = null
   const toastId = toast.loading("Loading...")
   try {
-    const response = await apiConnector("POST", UPDATE_SUBSECTION_API, data, {
+    const response = await apiConnector("PUT", UPDATE_SUBSECTION_API, data, {
       Authorization: `Bearer ${token}`,
     })
     if (!response?.data?.success) {
@@ -208,7 +210,7 @@ export const deleteSection = async (data, token) => {
   let result = null
   const toastId = toast.loading("Loading...")
   try {
-    const response = await apiConnector("POST", DELETE_SECTION_API, data, {
+    const response = await apiConnector("DELETE", DELETE_SECTION_API, data, {
       Authorization: `Bearer ${token}`,
     })
     if (!response?.data?.success) {

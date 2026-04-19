@@ -3,73 +3,78 @@ const Course = require("../models/Course");
 
 exports.createSection = async (req, res) => {
   try {
-    const { sectionName, courseId } = req.body;
-
-    if(!sectionName || !courseId)
-    {
-        return res.status(400).json({
-            success:false,
-            message:"missing properties"
-        })
-    }
-
-      const checkCourse = await Course.findById(courseId);
-
-    if(!checkCourse)
-    {
-      return res.json({
-        success:false,
-        message:"course does not exists"
+    const { sectionName, courseId } = req.body
+    if (!sectionName || !courseId) {
+      return res.status(400).json({
+        success: false,
+        message: "Missing required properties",
       })
     }
+    const newSection = await Section.create({ sectionName })
 
-    const section = await Section.create({ sectionName });
-
-    const newCourse= await Course.findByIdAndUpdate(courseId, {
-      $push: { courseContent: section._id },
-    },{new:true});
-
-    return res.json({
+    const updatedCourse = await Course.findByIdAndUpdate(
+      courseId,
+      {
+        $push: {
+          courseContent: newSection._id,
+        },
+      },
+      { new: true }
+    )
+      .populate({
+        path: "courseContent",
+        populate: {
+          path: "subSection",
+        },
+      })
+      .exec()
+    res.status(200).json({
       success: true,
-      message: "Section created",
-      data: newCourse,
-    });
+      message: "Section created successfully",
+      updatedCourse,
+    })
   } catch (error) {
-    res.status(500).json({ success: false,
-        message:"unable to create section,please try again"
-    });
+    res.status(500).json({
+      success: false,
+      message: "Internal server error",
+      error: error.message,
+    })
   }
-};
+}
 
 exports.updateSection = async (req, res) => {
   try {
-    const { sectionId, sectionName } = req.body;
+    const { sectionId, sectionName, courseId } = req.body; // Added courseId
 
-    if (!sectionId || !sectionName) {
+    if (!sectionId || !sectionName || !courseId) {
       return res.status(400).json({
         success: false,
-        message: "SectionId and SectionName are required",
+        message: "SectionId, SectionName, and CourseId are required",
       });
     }
 
-    const existingSection = await Section.findById(sectionId);
-    if (!existingSection) {
-      return res.status(404).json({
-        success: false,
-        message: "Section not found",
-      });
-    }
-
-    const updatedSection = await Section.findByIdAndUpdate(
+    // 1. Update the section
+    await Section.findByIdAndUpdate(
       sectionId,
       { sectionName },
-      { new: true },
+      { new: true }
     );
+
+    // 2. Fetch the FULL course and populate it
+    // This is the "Magic Step" that keeps the NestedView visible
+    const updatedCourse = await Course.findById(courseId)
+      .populate({
+        path: "courseContent",
+        populate: {
+          path: "subSection",
+        },
+      })
+      .exec();
 
     return res.status(200).json({
       success: true,
       message: "Section updated successfully",
-      data: updatedSection,
+      data: updatedCourse, // Return the WHOLE course, not just the section
     });
   } catch (error) {
     console.log(error);

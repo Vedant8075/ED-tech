@@ -144,12 +144,11 @@ exports.editCourse = async (req, res) => {
     const course = await Course.findById(courseId)
 
     if (!course) {
-      return res.status(404).json({ error: "Course not found" })
+      return res.status(404).json({ success: false, message: "Course not found" })
     }
 
-    // If Thumbnail Image is found, update it
-    if (req.files) {
-      console.log("thumbnail update")
+    // 1. Handle Thumbnail Update
+    if (req.files && req.files.thumbnailImage) {
       const thumbnail = req.files.thumbnailImage
       const thumbnailImage = await uploadImageToCloudinary(
         thumbnail,
@@ -158,45 +157,53 @@ exports.editCourse = async (req, res) => {
       course.thumbnail = thumbnailImage.secure_url
     }
 
-    for (const key in updates) {
-      if (updates.hasOwnProperty(key)) {
-        if (key === "tag" || key === "instructions") {
-          course[key] = JSON.parse(updates[key])
-        } else {
-          course[key] = updates[key]
-        }
+    
+    const fieldsToUpdate = [
+      "courseName",
+      "courseDescription",
+      "whatYouWillLearn",
+      "price",
+      "category",
+      "status"
+    ]
+
+    fieldsToUpdate.forEach((field) => {
+      if (updates[field] !== undefined) {
+        course[field] = updates[field]
       }
+    })
+
+    // 3. Handle fields that MUST be parsed from JSON strings (sent from FormData)
+    if (updates.tag) {
+      course.tag = JSON.parse(updates.tag)
+    }
+    if (updates.instructions) {
+      course.instructions = JSON.parse(updates.instructions)
     }
 
     await course.save()
 
-    const updatedCourse = await Course.findOne({
-      _id: courseId,
-    })
+    // 4. Return the fully populated course
+    const updatedCourse = await Course.findById(courseId) // Simplified from findOne
       .populate({
         path: "instructor",
-        populate: {
-          path: "additionalDetails",
-        },
+        populate: { path: "additionalDetails" },
       })
       .populate("category")
-      .populate("ratingAndReviews")
       .populate({
         path: "courseContent",
-        populate: {
-          path: "subSection",
-        },
+        populate: { path: "subSection" },
       })
       .exec()
 
-    res.json({
+    return res.json({
       success: true,
       message: "Course updated successfully",
       data: updatedCourse,
     })
   } catch (error) {
-    console.error(error)
-    res.status(500).json({
+    console.error("EDIT COURSE ERROR:", error)
+    return res.status(500).json({
       success: false,
       message: "Internal server error",
       error: error.message,

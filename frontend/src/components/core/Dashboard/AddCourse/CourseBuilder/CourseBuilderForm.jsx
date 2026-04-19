@@ -4,11 +4,13 @@ import { toast } from "react-hot-toast"
 import { IoAddCircleOutline } from "react-icons/io5"
 import { MdNavigateNext } from "react-icons/md"
 
+// Use your Zustand hooks
+import { useAuthStore, useCourseStore } from "../../../../../store/useStore"
+
 import {
   createSection,
   updateSection,
 } from "../../../../../services/operations/courseDetailsAPI"
-import { useAuthStore, useCourseStore } from "../../../../../store/useStore"
 import IconBtn from "../../../../Common/IconBtn"
 import NestedView from "./NestedView"
 
@@ -19,14 +21,16 @@ export default function CourseBuilderForm() {
     setValue,
     formState: { errors },
   } = useForm()
+
+  // Zustand State Selectors
   const token = useAuthStore((state) => state.token)
   const course = useCourseStore((state) => state.course)
   const setCourse = useCourseStore((state) => state.setCourse)
   const setStep = useCourseStore((state) => state.setStep)
   const setEditCourse = useCourseStore((state) => state.setEditCourse)
-
   const [loading, setLoading] = useState(false)
   const [editSectionName, setEditSectionName] = useState(null)
+
 
   const onSubmit = async (data) => {
     setLoading(true)
@@ -45,7 +49,7 @@ export default function CourseBuilderForm() {
       result = await createSection(
         {
           sectionName: data.sectionName,
-          courseId: course._id,
+          courseId: course._id
         },
         token
       )
@@ -74,22 +78,22 @@ export default function CourseBuilderForm() {
   }
 
   const goToNext = () => {
-    if (course.courseContent.length === 0) {
-      toast.error("Please add atleast one section")
+    if (course?.courseContent?.length === 0) {
+      toast.error("Please add at least one section")
       return
     }
     if (
-      course.courseContent.some((section) => section.subSection.length === 0)
+      course?.courseContent?.some((section) => (section.subSection?.length || 0) === 0)
     ) {
-      toast.error("Please add atleast one lecture in each section")
+      toast.error("Please add at least one lecture in each section")
       return
     }
-    setStep(3) 
+    setStep(3) // Direct Zustand call
   }
 
   const goBack = () => {
     setStep(1) 
-    setEditCourse(true)
+    setEditCourse(true) 
   }
 
   return (
@@ -136,13 +140,12 @@ export default function CourseBuilderForm() {
           )}
         </div>
       </form>
-
-      {/* NestedView logic */}
+      
       {course?.courseContent?.length > 0 && (
         <NestedView handleChangeEditSectionName={handleChangeEditSectionName} />
       )}
 
-      {/* Next Prev Button */}
+
       <div className="flex justify-end gap-x-3">
         <button
           type="button"
