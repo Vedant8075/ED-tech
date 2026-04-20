@@ -1,6 +1,8 @@
 const Course = require("../models/Course");
 const User = require("../models/User");
 const Tag = require("../models/Tags");
+const Section=require("../models/Section")
+const SubSection=require("../models/SubSection")
 const {uploadImageToCloudinary} = require("../utils/imageUploader");
 
 
@@ -239,23 +241,20 @@ exports.deleteCourse = async (req, res) => {
       return res.status(404).json({ message: "Course not found" })
     }
 
-    const studentsEnrolled = course.studentsEnroled
-    for (const studentId of studentsEnrolled) {
-      await User.findByIdAndUpdate(studentId, {
-        $pull: { courses: courseId },
-      })
-    }
-
-    const courseSections = course.courseContent
+    const students = course?.studentsEnrolled || []; 
+    
+    await User.updateMany(
+      { _id: { $in: students } },
+      { $pull: { courses: courseId } }
+    )
+    const courseSections = course.courseContent || []
     for (const sectionId of courseSections) {
       const section = await Section.findById(sectionId)
       if (section) {
-        const subSections = section.subSection
-        for (const subSectionId of subSections) {
-          await SubSection.findByIdAndDelete(subSectionId)
-        }
+        
+        const subSections = section.subSection || []
+        await SubSection.deleteMany({ _id: { $in: subSections } })
       }
-
       await Section.findByIdAndDelete(sectionId)
     }
 
@@ -263,10 +262,9 @@ exports.deleteCourse = async (req, res) => {
 
     return res.status(200).json({
       success: true,
-      message: "Course deleted successfully",
+      message: "Course and all related content deleted successfully",
     })
   } catch (error) {
-    console.error(error)
     return res.status(500).json({
       success: false,
       message: "Server error",
