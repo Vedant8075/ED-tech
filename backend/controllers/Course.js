@@ -147,7 +147,6 @@ exports.editCourse = async (req, res) => {
       return res.status(404).json({ success: false, message: "Course not found" })
     }
 
-    // 1. Handle Thumbnail Update
     if (req.files && req.files.thumbnailImage) {
       const thumbnail = req.files.thumbnailImage
       const thumbnailImage = await uploadImageToCloudinary(
@@ -173,7 +172,6 @@ exports.editCourse = async (req, res) => {
       }
     })
 
-    // 3. Handle fields that MUST be parsed from JSON strings (sent from FormData)
     if (updates.tag) {
       course.tag = JSON.parse(updates.tag)
     }
@@ -205,6 +203,28 @@ exports.editCourse = async (req, res) => {
     return res.status(500).json({
       success: false,
       message: "Internal server error",
+      error: error.message,
+    })
+  }
+}
+
+exports.getInstructorCourses = async (req, res) => {
+  try {
+    const instructorId = req.user.id
+
+    const instructorCourses = await Course.find({
+      instructor: instructorId,
+    }).sort({ createdAt: -1 })
+
+    res.status(200).json({
+      success: true,
+      data: instructorCourses,
+    })
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({
+      success: false,
+      message: "Failed to retrieve instructor courses",
       error: error.message,
     })
   }

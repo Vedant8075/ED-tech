@@ -15,7 +15,7 @@ const {
   UPDATE_SUBSECTION_API,
   DELETE_SECTION_API,
   DELETE_SUBSECTION_API,
-//   GET_ALL_INSTRUCTOR_COURSES_API,
+  GET_ALL_INSTRUCTOR_COURSES_API,
   DELETE_COURSE_API,
   GET_FULL_COURSE_DETAILS_AUTHENTICATED,
   CREATE_RATING_API
@@ -247,29 +247,29 @@ export const deleteSubSection = async (data, token) => {
   return result
 }
 
-// export const fetchInstructorCourses = async (token) => {
-//   let result = []
-//   const toastId = toast.loading("Loading...")
-//   try {
-//     const response = await apiConnector(
-//       "GET",
-//       GET_ALL_INSTRUCTOR_COURSES_API,
-//       null,
-//       {
-//         Authorization: `Bearer ${token}`,
-//       }
-//     )
-//     if (!response?.data?.success) {
-//       throw new Error("Could Not Fetch Instructor Courses")
-//     }
-//     result = response?.data?.data
-//   } catch (error) {
-//     console.log("INSTRUCTOR COURSES API ERROR............", error)
-//     toast.error(error.message)
-//   }
-//   toast.dismiss(toastId)
-//   return result
-// }
+export const fetchInstructorCourses = async (token) => {
+  let result = []
+  const toastId = toast.loading("Loading...")
+  try {
+    const response = await apiConnector(
+      "GET",
+      GET_ALL_INSTRUCTOR_COURSES_API,
+      null,
+      {
+        Authorization: `Bearer ${token}`,
+      }
+    )
+    if (!response?.data?.success) {
+      throw new Error("Could Not Fetch Instructor Courses")
+    }
+    result = response?.data?.data
+  } catch (error) {
+    console.log("INSTRUCTOR COURSES API ERROR............", error)
+    toast.error(error.message)
+  }
+  toast.dismiss(toastId)
+  return result
+}
 
 export const deleteCourse = async (data, token) => {
   const toastId = toast.loading("Loading...")
