@@ -3,80 +3,121 @@ const User = require("../models/User");
 const Tag = require("../models/Tags");
 const Section=require("../models/Section")
 const SubSection=require("../models/SubSection")
+const Category=require("../models/Category")
 const {uploadImageToCloudinary} = require("../utils/imageUploader");
 
 
 exports.createCourse = async (req, res) => {
   try {
-    let { courseName, courseDescription, price, tag , whatYouWillLearn,instructions } = req.body;
+    const userId = req.user.id
 
-    const thumbnail=req.files.thumbnailImage
+    let {
+      courseName,
+      courseDescription,
+      whatYouWillLearn,
+      price,
+      tag: _tag,
+      category,
+      status,
+      instructions: _instructions,
+    } = req.body
+    const thumbnail = req.files.thumbnailImage
 
-    if (!req.files || !req.files.thumbnailImage) {
-      return res.status(400).json({
-        success: false,
-        message: "Thumbnail image is required",
-      });
-    }
+    const tag = JSON.parse(_tag)
+    const instructions = JSON.parse(_instructions)
+
     if (
       !courseName ||
       !courseDescription ||
-      !price ||
-      !tag ||
       !whatYouWillLearn ||
-      !instructions
+      !price ||
+      !tag.length ||
+      !thumbnail ||
+      !category ||
+      !instructions.length
     ) {
       return res.status(400).json({
         success: false,
-        message: "all fields are required",
-      });
-    }
-
-    const userId=req.user.id 
-    const instructorDetails=await User.findById(userId)
-    tag = JSON.parse(req.body.tag);
-    instructions = JSON.parse(req.body.instructions);
-
-    if(!instructorDetails)
-    {
-      return res.status(404).json({
-        success:false,
-        message:"instructor not found"
+        message: "All Fields are Mandatory",
       })
     }
-    
+    if (!status || status === undefined) {
+      status = "Draft"
+    }
+    const instructorDetails = await User.findById(userId, {
+      accountType: "Instructor",
+    })
+
+    if (!instructorDetails) {
+      return res.status(404).json({
+        success: false,
+        message: "Instructor Details Not Found",
+      })
+    }
+
+    const categoryDetails = await Category.findById(category)
+    if (!categoryDetails) {
+      return res.status(404).json({
+        success: false,
+        message: "Category Details Not Found",
+      })
+    }
+
     const thumbnailImage = await uploadImageToCloudinary(
       thumbnail,
-      process.env.FOLDER_NAME,
-    );
+      process.env.FOLDER_NAME
+    )
+    console.log(thumbnailImage)
 
-    const newcourse = await Course.create({
+    const newCourse = await Course.create({
       courseName,
       courseDescription,
       instructor: instructorDetails._id,
+      whatYouWillLearn: whatYouWillLearn,
       price,
-      instructions,
       tag,
-      whatYouWillLearn,
-      thumbnail:thumbnailImage.secure_url
-    });
+      category: categoryDetails._id,
+      thumbnail: thumbnailImage.secure_url,
+      status: status,
+      instructions,
+    })
 
-    await User.findByIdAndUpdate({_id:instructorDetails._id},
-       { $push: {Course:newcourse._id}}
-    );
 
-    return res.status(200).json({
+    await User.findByIdAndUpdate(
+      {
+        _id: instructorDetails._id,
+      },
+      {
+        $push: {
+          courses: newCourse._id,
+        },
+      },
+      { new: true }
+    )
+
+    const categoryDetails2 = await Category.findByIdAndUpdate(
+      { _id: category },
+      {
+        $push: {
+          courses: newCourse._id,
+        },
+      },
+      { new: true }
+    )
+    res.status(200).json({
       success: true,
-      message: "Course created",
-      data: newcourse,
-    });
+      data: newCourse,
+      message: "Course Created Successfully",
+    })
   } catch (error) {
-    console.log(error)
-    return res.status(500).json({ success: false,
-      message:"course cannot be created atp",
-    });
+    console.error(error)
+    res.status(500).json({
+      success: false,
+      message: "Failed to create course",
+      error: error.message,
+    })
   }
-};
+}
 
 
 exports.getAllCourses = async (req, res) => {

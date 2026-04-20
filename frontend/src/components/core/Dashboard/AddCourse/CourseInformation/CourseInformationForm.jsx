@@ -108,9 +108,9 @@ const categoryId = typeof data.courseCategory === 'object'
     ? data.courseCategory._id 
     : data.courseCategory;
 
-if (categoryId !== course.category?._id) {
+    if (categoryId !== course.category?._id) {
     formData.append("category", categoryId)
-}
+    }
       if (currentValues.courseRequirements.toString() !== course.instructions.toString()) {
         formData.append("instructions", JSON.stringify(data.courseRequirements))
       }
@@ -125,6 +125,7 @@ if (categoryId !== course.category?._id) {
       if (result) {
         setStep(2)
         setCourse(result)
+        console.log(result)
       }
     } else {
       toast.error("No changes made to the form")
@@ -132,7 +133,7 @@ if (categoryId !== course.category?._id) {
     return
   }
 
-  // --- CREATE COURSE LOGIC ---
+
   const formData = new FormData()
   formData.append("courseName", data.courseTitle)
   formData.append("courseDescription", data.courseShortDesc)
@@ -143,7 +144,7 @@ if (categoryId !== course.category?._id) {
   formData.append("status", COURSE_STATUS.DRAFT)
   formData.append("instructions", JSON.stringify(data.courseRequirements))
   formData.append("thumbnailImage", data.courseImage)
-
+  
   setLoading(true)
   const result = await addCourseDetails(formData, token)
   if (result) {

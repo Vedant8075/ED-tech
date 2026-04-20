@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react"
-import { useSelector } from "react-redux"
 import { useParams } from "react-router-dom"
 import Footer from "../components/Common/Footer"
 import Course_Card from "../components/core/Catalog/Course_Card"
@@ -8,10 +7,10 @@ import { apiConnector } from "../services/apiConnector"
 import { categories } from "../services/apis"
 import { getCatalogPageData } from "../services/operations/pageAndComponentData"
 import Error from "./Error"
-
+import {useProfileStore} from "../store/useStore"
 
 function Catalog() {
-  const { loading } = useSelector((state) => state.profile)
+  const  loading  = useProfileStore((state) => state.loading)
   const { catalogName } = useParams()
   const [active, setActive] = useState(1)
   const [catalogPageData, setCatalogPageData] = useState(null)

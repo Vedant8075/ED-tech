@@ -4,14 +4,17 @@ import { apiConnector } from "../apiConnector"
 import { catalogData } from "../apis"
 
 export const getCatalogPageData = async (categoryId) => {
+  console.log(categoryId)
   const toastId = toast.loading("Loading...")
   let result = []
   try {
     const response = await apiConnector(
       "GET",
       catalogData.CATALOGPAGEDATA_API,
+      null,
+      null,
       {
-        categoryId: categoryId,
+        categoryId: categoryId
       }
     )
     if (!response?.data?.success) {

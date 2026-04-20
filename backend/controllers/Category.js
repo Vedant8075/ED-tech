@@ -42,10 +42,13 @@ exports.showAllCategories = async (req, res) => {
   }
 };
 
+function getRandomInt(max) {
+    return Math.floor(Math.random() * max);
+}
+
 exports.categoryPageDetails = async (req, res) => {
   try {
-    const { categoryId } = req.body
-
+    const categoryId = req.query.categoryId || req.body.categoryId || req.params.categoryId;
     const selectedCategory = await Category.findById(categoryId)
       .populate({
         path: "courses",
@@ -54,7 +57,6 @@ exports.categoryPageDetails = async (req, res) => {
       })
       .exec()
 
-    console.log("SELECTED COURSE", selectedCategory)
     if (!selectedCategory) {
       console.log("Category not found.")
       return res
