@@ -16,9 +16,9 @@ import PrivateRoute from "./components/core/Auth/PrivateRoute"
 import EnrolledCourses from "./components/core/Dashboard/EnrolledCourses"
 import Cart from "./components/core/Dashboard/Cart"
 import AddCourse from "./components/core/Dashboard/AddCourse";
-import MyCourses from "./components/core/Dashboard/MyCourses"
+import MyCourses from "./components/core/Dashboard/MyCourses";
+import Catalog from "./pages/Catalog";
 const App = () => {
-
 
   return (
     <div className="w-screen min-h-screen bg-richblack-900 flex flex-col font-inter">
@@ -26,6 +26,7 @@ const App = () => {
       </Navbar>
       <Routes>
         <Route path="/" element={<Home></Home>}/>
+        <Route path="catalog/:catalogName" element={<Catalog />} />
           <Route
           path="login"
           element={

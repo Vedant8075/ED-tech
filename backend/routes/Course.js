@@ -12,6 +12,7 @@ const {
 const {
   showAllCategories,
   createCategory,
+  categoryPageDetails
 } = require("../controllers/Category");
 const {
   createSection,
@@ -42,6 +43,7 @@ router.get("/getFullCourseDetails", getCourseDetails);
 
 router.post("/createcategory", auth, isAdmin, createCategory);
 router.get("/showAllCategories", showAllCategories);
+router.get("/getCategoryPageDetails",categoryPageDetails);
 
 router.post("/addSection", auth, isInstructor, createSection);
 router.put("/updateSection", auth, isInstructor, updateSection);

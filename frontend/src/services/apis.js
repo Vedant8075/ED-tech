@@ -50,9 +50,9 @@ export const categories = {
   CATEGORIES_API: BASE_URL + "/course/showAllCategories",
 }
 
-// export const catalogData = {
-//   CATALOGPAGEDATA_API: BASE_URL + "/course/getCategoryPageDetails",
-// }
+export const catalogData = {
+  CATALOGPAGEDATA_API: BASE_URL + "/course/getCategoryPageDetails",
+}
 
 
 // export const contactusEndpoint = {

@@ -13,7 +13,6 @@ function Error() {
       </div>
       <button className="bg-[#115e59] py-2 px-4 rounded-full flex gap-4 shadow hover:bg-[#40827e] duration-1000"
         onClick = {() => navigate(-1)}>
-          {/* use naviaget here tells the browser to go back one tab */}
           <FaArrowLeft
             className=" my-1"
           />
