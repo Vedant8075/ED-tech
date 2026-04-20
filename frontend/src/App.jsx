@@ -16,6 +16,7 @@ import PrivateRoute from "./components/core/Auth/PrivateRoute"
 import EnrolledCourses from "./components/core/Dashboard/EnrolledCourses"
 import Cart from "./components/core/Dashboard/Cart"
 import AddCourse from "./components/core/Dashboard/AddCourse";
+import MyCourses from "./components/core/Dashboard/MyCourses"
 const App = () => {
 
 
@@ -83,6 +84,8 @@ const App = () => {
         <Route path="dashboard/cart" element={<Cart></Cart>}/>
         <Route  path="dashboard/enrolled-courses"  element={<EnrolledCourses />}  />
         <Route  path="dashboard/add-course"  element={<AddCourse></AddCourse>}  />
+        <Route path="dashboard/my-courses" element={<MyCourses />} />
+
         </Route>
         <Route path="*" element={<Error />} />
       </Routes>

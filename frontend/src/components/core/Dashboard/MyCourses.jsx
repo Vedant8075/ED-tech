@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { VscAdd } from "react-icons/vsc"
-import { useAuthStore } from "../../../../store/useStore"
+import { useAuthStore } from "../../../store/useStore"
 import { useNavigate } from "react-router-dom"
 import { fetchInstructorCourses } from "../../../services/operations/courseDetailsAPI"
 import IconBtn from "../../Common/IconBtn"

@@ -1,7 +1,6 @@
 import { useDispatch, useSelector } from "react-redux"
 import { Table, Tbody, Td, Th, Thead, Tr } from "react-super-responsive-table"
 
-import { setCourse, setEditCourse } from "../../../../slices/courseSlice"
 import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css"
 import { useState } from "react"
 import { FaCheck } from "react-icons/fa"
@@ -17,11 +16,13 @@ import {
 } from "../../../../services/operations/courseDetailsAPI"
 import { COURSE_STATUS } from "../../../../utils/constants"
 import ConfirmationModal from "../../../Common/ConfirmationModal"
-import { useAuthStore } from "../../../../../store/useStore"
+import { useAuthStore,useCourseStore } from "../../../../store/useStore"
 
 export default function CoursesTable({ courses, setCourses }) {
   const navigate = useNavigate()
-  const { token } = useAuthStore((state) => state.token)
+  const token = useAuthStore((state) => state.token)
+  const setCourse=useCourseStore((state)=>state.setCourse)
+  const setEditCourse=useCourseStore((state)=>state.setEditCourse)
   const [loading, setLoading] = useState(false)
   const [confirmationModal, setConfirmationModal] = useState(null)
   const TRUNCATE_LENGTH = 30
