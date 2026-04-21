@@ -49,15 +49,19 @@ export const fetchCourseDetails = async (courseId) => {
   setGlobalLoading(true)
   let result = null
   try {
-    const response = await apiConnector("POST", COURSE_DETAILS_API, {
+    const response = await apiConnector("GET", COURSE_DETAILS_API,
+      null,
+      null,
+       {
       courseId,
-    })
+      })
     console.log("COURSE_DETAILS_API API RESPONSE............", response)
 
     if (!response.data.success) {
       throw new Error(response.data.message)
     }
     result = response.data
+    console.log(result)
   } catch (error) {
     console.log("COURSE_DETAILS_API API ERROR............", error)
     result = error.response.data

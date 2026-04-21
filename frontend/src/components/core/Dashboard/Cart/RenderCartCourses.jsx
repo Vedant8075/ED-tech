@@ -1,13 +1,12 @@
 import { FaStar } from "react-icons/fa"
 import { RiDeleteBin6Line } from "react-icons/ri"
-import ReactStars from "react-rating-stars-component"
+// import ReactStars from "react-rating-stars-component"
 import { useCartStore } from "../../../../store/useStore"
 
 export default function RenderCartCourses() {
-  const { cart, removeFromCart } = useCartStore((state) => ({
-  cart: state.cart,
-  removeFromCart: state.removeFromCart
-   }));
+  const  cart = useCartStore((state) => (state.cart))
+  const removeFromCart= useCartStore((state)=>(state.removeFromCart));
+  console.log(cart)
   return (
     <div className="flex flex-1 flex-col">
       {cart.map((course, indx) => (
@@ -32,15 +31,15 @@ export default function RenderCartCourses() {
               </p>
               <div className="flex items-center gap-2">
                 <span className="text-yellow-5">4.5</span>
-                <ReactStars
+                {/* <ReactStars
                   count={5}
-                  value={course?.ratingAndReviews?.length}
+                  value={Number(course?.ratingAndReviews?.length) || 0}
                   size={20}
                   edit={false}
                   activeColor="#ffd700"
                   emptyIcon={<FaStar />}
                   fullIcon={<FaStar />}
-                />
+                /> */}
                 <span className="text-richblack-400">
                   {course?.ratingAndReviews?.length} Ratings
                 </span>

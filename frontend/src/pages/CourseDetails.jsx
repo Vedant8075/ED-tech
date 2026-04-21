@@ -42,7 +42,7 @@ function CourseDetails() {
   }, [courseId])
 
   useEffect(() => {
-    const count = GetAvgRating(response?.data?.courseDetails.ratingAndReviews)
+    const count = GetAvgRating(response?.data?.ratingAndReviews)
     setAvgReviewCount(count)
   }, [response])
 
@@ -90,7 +90,7 @@ function CourseDetails() {
   if (!response.success) {
     return <Error />
   }
-
+ 
   const {
     courseName,
     courseDescription,
@@ -100,9 +100,9 @@ function CourseDetails() {
     courseContent,
     ratingAndReviews,
     instructor,
-    studentsEnroled,
+    studentsEnrolled,
     createdAt,
-  } = response.data?.courseDetails
+  } = response.data
 
   if (paymentLoading) {
     return (
@@ -132,8 +132,8 @@ function CourseDetails() {
               <div className="text-md flex flex-wrap items-center gap-2">
                 <span className="text-yellow-25">{avgReviewCount}</span>
                 <RatingStars Review_Count={avgReviewCount} Star_Size={24} />
-                <span>{`(${ratingAndReviews.length} reviews)`}</span>
-                <span>{`${studentsEnroled.length} students enrolled`}</span>
+                <span>{`(${ratingAndReviews?.length || 0} reviews)`}</span>
+                <span>{`${studentsEnrolled?.length || 0} students enrolled`}</span>
               </div>
               <p>Created By {`${instructor.firstName} ${instructor.lastName}`}</p>
               <div className="flex flex-wrap gap-5 text-lg">
@@ -145,13 +145,17 @@ function CourseDetails() {
             <div className="flex w-full flex-col gap-4 border-y border-y-richblack-500 py-4 lg:hidden">
               <p className="space-x-3 pb-4 text-3xl font-semibold text-richblack-5">Rs. {price}</p>
               <button className="yellowButton" onClick={handleBuyCourse}>Buy Now</button>
-              <button className="blackButton">Add to Cart</button>
+              <CourseDetailsCard
+                course={response?.data}
+                setConfirmationModal={setConfirmationModal}
+                handleBuyCourse={handleBuyCourse}
+              />
             </div>
           </div>
           {/* Desktop Course Card */}
           <div className="right-[1rem] top-[60px] mx-auto hidden min-h-[600px] w-1/3 max-w-[410px] lg:absolute lg:block">
             <CourseDetailsCard
-              course={response?.data?.courseDetails}
+              course={response?.data}
               setConfirmationModal={setConfirmationModal}
               handleBuyCourse={handleBuyCourse}
             />

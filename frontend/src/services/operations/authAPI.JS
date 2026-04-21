@@ -167,7 +167,6 @@ export async function resetPassword(newPassword, confirmPassword, token, navigat
 export function logout(navigate) {
   useAuthStore.getState().setToken(null)
   useProfileStore.getState().setUser(null)
-  useCartStore.getState().resetCart()
   
   localStorage.removeItem("token")
   localStorage.removeItem("user")

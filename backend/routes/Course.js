@@ -39,7 +39,7 @@ const {
 
 router.post("/createCourse", auth, isInstructor, createCourse);
 router.get("/getAllCourses", getAllCourses);
-router.get("/getFullCourseDetails", getCourseDetails);
+router.get("/getCourseDetails", getCourseDetails);
 
 router.post("/createcategory", auth, isAdmin, createCategory);
 router.get("/showAllCategories", showAllCategories);

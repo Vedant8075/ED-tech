@@ -2,8 +2,8 @@ import { toast } from "react-hot-toast"
 import rzpLogo from "../../assets/Logo/rzp_logo.png"
 import { apiConnector } from "../apiConnector"
 import { studentEndpoints } from "../apis"
-import { useCartStore } from "../../store/useCartStore" 
-import { useCourseStore } from "../../store/useCourseStore"
+import { useCartStore } from "../../store/useStore" 
+import { useCourseStore } from "../../store/useStore"
 
 const {
   COURSE_PAYMENT_API,

@@ -3,9 +3,9 @@ import RenderTotalAmount from "./ResetTotalAmount"
 import { useCartStore } from "../../../../store/useStore"
 import { useCourseStore } from "../../../../store/useStore"
 export default function Cart() {
-  const { total } = useCartStore((state) => state.total)
-  const { totalItems} = useCartStore((state) => state. totalItems)
-  const { paymentLoading } = useCourseStore((state) => state. paymentLoading )
+  const total = useCartStore((state) => state.total)
+  const totalItems = useCartStore((state) => state.totalItems)
+  const paymentLoading = useCourseStore((state) => state.paymentLoading)
 
   if (paymentLoading)
     return (

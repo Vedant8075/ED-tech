@@ -135,8 +135,8 @@ exports.getAllCourses = async (req, res) => {
 
 exports.getCourseDetails = async (req, res) => {
   try {
-    const { courseId } = req.body; 
-
+    const courseId = req.query.courseId || req.body.courseId || req.params.courseId; 
+    console.log(courseId)
     if (!courseId) {
       return res.status(400).json({
         success: false,
