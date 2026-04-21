@@ -1,6 +1,9 @@
 const User = require("../models/User");
 const Profile = require("../models/Profile");
 const Course = require("../models/Course");
+const { convertSecondsToDuration } = require("../utils/secToDuration")
+const CourseProgress = require("../models/CourseProgress")
+
 
 exports.updateProfile = async (req, res) => {
   try {
@@ -174,7 +177,6 @@ exports.getEnrolledCourses = async (req, res) => {
       if (SubsectionLength === 0) {
         userDetails.courses[i].progressPercentage = 100
       } else {
-        // To make it up to 2 decimal point
         const multiplier = Math.pow(10, 2)
         userDetails.courses[i].progressPercentage =
           Math.round(

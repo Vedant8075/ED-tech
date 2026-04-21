@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react"
-import ProgressBar from "@ramonak/react-progress-bar"
 import { BiDotsVerticalRounded } from "react-icons/bi"
 
 import { useNavigate } from "react-router-dom"
@@ -16,7 +15,6 @@ export default function EnrolledCourses() {
       try {
         const res = await getUserEnrolledCourses(token) 
         const filterPublishCourse = res.filter((ele) => ele.status !== "Draft")   
-
         setEnrolledCourses(filterPublishCourse)
       } catch (error) {
         console.log("Could not fetch enrolled courses.")
@@ -74,12 +72,19 @@ export default function EnrolledCourses() {
               </div>
               <div className="w-1/4 px-2 py-3">{course?.totalDuration}</div>
               <div className="flex w-1/5 flex-col gap-2 px-2 py-3">
-                <p>Progress: {course.progressPercentage || 0}%</p>
-                <ProgressBar
-                  completed={course.progressPercentage || 0}
-                  height="8px"
-                  isLabelVisible={false}
-                />
+             
+                <div className="flex w-1/5 flex-col gap-2 px-2 py-3">
+  <p>Progress: {course.progressPercentage || 0}%</p>
+  {/* Custom Tailwind Progress Bar */}
+  <div className="h-2 w-full rounded-full bg-richblack-700">
+    <div
+      className="h-full rounded-full bg-blue-100"
+      style={{
+        width: `${course.progressPercentage || 0}%`,
+      }}
+    ></div>
+  </div>
+</div>
               </div>
             </div>
           ))}
