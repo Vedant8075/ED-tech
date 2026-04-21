@@ -18,6 +18,7 @@ import Cart from "./components/core/Dashboard/Cart"
 import AddCourse from "./components/core/Dashboard/AddCourse";
 import MyCourses from "./components/core/Dashboard/MyCourses";
 import Catalog from "./pages/Catalog";
+import CourseDetails from "./pages/CourseDetails"
 const App = () => {
 
   return (
@@ -27,6 +28,8 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Home></Home>}/>
         <Route path="catalog/:catalogName" element={<Catalog />} />
+        <Route path="courses/:courseId" element={<CourseDetails />} />
+
           <Route
           path="login"
           element={
