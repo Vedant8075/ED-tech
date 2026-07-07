@@ -20,8 +20,12 @@ import Cart from "./components/core/Dashboard/Cart"
 import AddCourse from "./components/core/Dashboard/AddCourse";
 import MyCourses from "./components/core/Dashboard/MyCourses";
 import Catalog from "./pages/Catalog";
-import CourseDetails from "./pages/CourseDetails"
+import CourseDetails from "./pages/CourseDetails";
+import { ACCOUNT_TYPE } from "./utils/constants";
+import { useProfileStore } from "./store/useStore";
+
 const App = () => {
+  const user = useProfileStore((state) => state.user)
 
   return (
     <div className="w-screen min-h-screen bg-richblack-900 flex flex-col font-inter">
@@ -88,11 +92,22 @@ const App = () => {
         >
         <Route path="dashboard/my-profile" element ={<MyProfile></MyProfile>}/>
         <Route path="dashboard/settings" element={<Settings></Settings>}/>
+        {
+          user?.accountType===ACCOUNT_TYPE.STUDENT &&(<>
         <Route path="dashboard/cart" element={<Cart></Cart>}/>
         <Route  path="dashboard/enrolled-courses"  element={<EnrolledCourses />}  />
-        <Route  path="dashboard/add-course"  element={<AddCourse></AddCourse>}  />
-        <Route path="dashboard/my-courses" element={<MyCourses />} />
-
+        </>)
+        }
+        {
+        user?.accountType === ACCOUNT_TYPE.INSTRUCTOR && (
+          <>
+          {/* <Route path="dashboard/instructor" element={<Instructor />} /> */}
+          <Route path="dashboard/add-course" element={<AddCourse />} />
+          <Route path="dashboard/my-courses" element={<MyCourses />} />
+          {/* <Route path="dashboard/edit-course/:courseId" element={<EditCourse />} />  */}
+          </>
+        )
+        }
         </Route>
         <Route path="*" element={<ErrorPage />} />
       </Routes>
