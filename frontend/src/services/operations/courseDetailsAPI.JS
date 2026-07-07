@@ -249,7 +249,7 @@ export const deleteSubSection = async (data, token) => {
   return result
 }
 
-export const fetchInstructorCourses = async (token) => {
+export const  fetchInstructorCourses = async (token) => {
   let result = []
   const toastId = toast.loading("Loading...")
   try {

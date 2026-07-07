@@ -6,8 +6,8 @@ import InstructorChart from './InstructorChart';
 import { Link } from 'react-router-dom';
 
 export default function Instructor() {
-    const { token } = useSAuthStore((state) => state.token)
-    const { user } = useProfileStore((state) => state.user)
+    const token = useAuthStore((state) => state.token)
+    const  user  = useProfileStore((state) => state.user)
     const [loading, setLoading] = useState(false)
     const [instructorData, setInstructorData] = useState(null)
     const [courses, setCourses] = useState([])
@@ -17,6 +17,7 @@ export default function Instructor() {
         setLoading(true)
         const instructorApiData = await getInstructorData(token)
         const result = await fetchInstructorCourses(token)
+        console.log(result)
         console.log(instructorApiData)
         if (instructorApiData.length) setInstructorData(instructorApiData)
         if (result) {
@@ -109,7 +110,7 @@ export default function Instructor() {
                       </p>
                       <div className="mt-1 flex items-center space-x-2">
                         <p className="text-xs font-medium text-richblack-300">
-                          {course.studentsEnroled.length} students
+                          {course.studentsEnroled?.length} students
                         </p>
                         <p className="text-xs font-medium text-richblack-300">
                           |

@@ -24,6 +24,7 @@ import CourseDetails from "./pages/CourseDetails";
 import { ACCOUNT_TYPE } from "./utils/constants";
 import { useProfileStore } from "./store/useStore";
 import EditCourse from "./components/core/Dashboard/EditCourse/index.jsx";
+import Instructor from "./components/core/Dashboard/InstructorDashboard/Instructor.jsx";
 const App = () => {
   const user = useProfileStore((state) => state.user)
 
@@ -101,7 +102,7 @@ const App = () => {
         {
         user?.accountType === ACCOUNT_TYPE.INSTRUCTOR && (
           <>
-          {/* <Route path="dashboard/instructor" element={<Instructor />} /> */}
+          <Route path="dashboard/instructor" element={<Instructor />} />
           <Route path="dashboard/add-course" element={<AddCourse />} />
           <Route path="dashboard/my-courses" element={<MyCourses />} />
           <Route path="dashboard/edit-course/:courseId" element={<EditCourse />} /> 
