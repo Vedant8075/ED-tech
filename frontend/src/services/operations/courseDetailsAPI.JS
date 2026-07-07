@@ -55,7 +55,6 @@ export const fetchCourseDetails = async (courseId) => {
        {
       courseId,
       })
-    console.log("COURSE_DETAILS_API API RESPONSE............", response)
 
     if (!response.data.success) {
       throw new Error(response.data.message)
@@ -121,7 +120,6 @@ export const editCourseDetails = async (data, token) => {
     }
     toast.success("Course Details Updated Successfully")
     result = response?.data?.data
-    console.log(result)
   } catch (error) {
     console.log("EDIT COURSE API ERROR............", error)
     toast.error(error.message)
@@ -298,19 +296,21 @@ export const getFullDetailsOfCourse = async (courseId, token) => {
   let result = null
   try {
     const response = await apiConnector(
-      "POST",
-      GET_FULL_COURSE_DETAILS_AUTHENTICATED,
-      { courseId },
-      { Authorization: `Bearer ${token}` }
+      "GET",
+      COURSE_DETAILS_API,
+      null,
+      { Authorization: `Bearer ${token}` },
+      { courseId }
     )
 
-    if (!response.data.success) {
-      throw new Error(response.data.message)
+    if (!response?.data?.success) {
+      throw new Error(response?.data?.message || "Could not fetch course details")
     }
+
     result = response?.data?.data
   } catch (error) {
     console.log("COURSE_FULL_DETAILS_API API ERROR............", error)
-    result = error.response.data
+    result = error?.response?.data || null
   }
   toast.dismiss(toastId)
   setGlobalLoading(false)
