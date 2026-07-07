@@ -9,6 +9,8 @@ import UpdatePassword from './pages/UpdatePassword';
 import VerifyEmail from "./pages/VerifyEmail"
 import Dashboard from "./pages/Dashboard"
 import About from "./pages/About"
+import Contact from "./pages/Contact"
+import ErrorPage from "./pages/Error"
 import Settings from "./components/core/Dashboard/Settings"
 import MyProfile from "./components/core/Dashboard/MyProfile"
 import OpenRoute from "./components/core/Auth/OpenRoute"
@@ -76,6 +78,7 @@ const App = () => {
             <About/>             
           }
         />
+        <Route path="contact" element={<Contact />} />
         <Route
           element={
               <PrivateRoute>
@@ -91,7 +94,7 @@ const App = () => {
         <Route path="dashboard/my-courses" element={<MyCourses />} />
 
         </Route>
-        <Route path="*" element={<Error />} />
+        <Route path="*" element={<ErrorPage />} />
       </Routes>
     </div>
   )

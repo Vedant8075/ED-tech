@@ -55,9 +55,9 @@ export const catalogData = {
 }
 
 
-// export const contactusEndpoint = {
-//   CONTACT_US_API: BASE_URL + "/reach/contact",
-// }
+export const contactusEndpoint = {
+  CONTACT_US_API: BASE_URL + "/reach/contact",
+}
 
 export const settingsEndpoints = {
   UPDATE_DISPLAY_PICTURE_API: BASE_URL + "/profile/updateDisplayPicture",
