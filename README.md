@@ -585,37 +585,6 @@ GET /course/getReviews
 
 ---
 
-# 📸 Screenshots
-
-## Home Page
-
-```
-Add Screenshot Here
-```
-
-## Course Details
-
-```
-Add Screenshot Here
-```
-
-## Instructor Dashboard
-
-```
-Add Screenshot Here
-```
-
-## Student Dashboard
-
-```
-Add Screenshot Here
-```
-
-## Payment Page
-
-```
-Add Screenshot Here
-```
 
 ---
 
@@ -624,7 +593,7 @@ Add Screenshot Here
 Clone the repository
 
 ```bash
-git clone https://github.com/yourusername/studynotion.git
+git clone https://github.com/Vedant8075/studynotion.git
 ```
 
 Move into the project
