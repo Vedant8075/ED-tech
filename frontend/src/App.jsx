@@ -23,6 +23,8 @@ import Catalog from "./pages/Catalog";
 import CourseDetails from "./pages/CourseDetails";
 import { ACCOUNT_TYPE } from "./utils/constants";
 import { useProfileStore } from "./store/useStore";
+import ViewCourse from "./pages/ViewCourse.jsx";
+import VideoDetails from "./components/core/ViewCourse/VideoDetails.jsx";
 import EditCourse from "./components/core/Dashboard/EditCourse/index.jsx";
 import Instructor from "./components/core/Dashboard/InstructorDashboard/Instructor.jsx";
 const App = () => {
@@ -110,6 +112,25 @@ const App = () => {
         )
         }
         </Route>
+        <Route element={
+        <PrivateRoute>
+          <ViewCourse />
+        </PrivateRoute>
+         }>
+
+           {
+        user?.accountType === ACCOUNT_TYPE.STUDENT && (
+          <>
+          <Route 
+            path="view-course/:courseId/section/:sectionId/sub-section/:subSectionId"
+            element={<VideoDetails />}
+          />
+          </>
+        )
+      }
+
+         </Route>
+
         <Route path="*" element={<ErrorPage />} />
       </Routes>
     </div>

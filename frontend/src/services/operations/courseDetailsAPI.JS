@@ -18,8 +18,8 @@ const {
   GET_ALL_INSTRUCTOR_COURSES_API,
   DELETE_COURSE_API,
   GET_FULL_COURSE_DETAILS_AUTHENTICATED,
-  CREATE_RATING_API
-//   LECTURE_COMPLETION_API,
+  CREATE_RATING_API,
+  LECTURE_COMPLETION_API,
 } = courseEndpoints
 
 // Helper to update loading state in Zustand Store
@@ -317,27 +317,27 @@ export const getFullDetailsOfCourse = async (courseId, token) => {
   return result
 }
 
-// export const markLectureAsComplete = async (data, token) => {
-//   let result = null
-//   const toastId = toast.loading("Loading...")
-//   try {
-//     const response = await apiConnector("POST", LECTURE_COMPLETION_API, data, {
-//       Authorization: `Bearer ${token}`,
-//     })
+export const markLectureAsComplete = async (data, token) => {
+  let result = null
+  const toastId = toast.loading("Loading...")
+  try {
+    const response = await apiConnector("POST", LECTURE_COMPLETION_API, data, {
+      Authorization: `Bearer ${token}`,
+    })
 
-//     if (!response.data.success && !response.data.message) {
-//       throw new Error(response.data.error)
-//     }
-//     toast.success("Lecture Completed")
-//     result = true
-//   } catch (error) {
-//     console.log("MARK_LECTURE_AS_COMPLETE_API API ERROR............", error)
-//     toast.error(error.message)
-//     result = false
-//   }
-//   toast.dismiss(toastId)
-//   return result
-// }
+    if (!response.data.success && !response.data.message) {
+      throw new Error(response.data.error)
+    }
+    toast.success("Lecture Completed")
+    result = true
+  } catch (error) {
+    console.log("MARK_LECTURE_AS_COMPLETE_API API ERROR............", error)
+    toast.error(error.message)
+    result = false
+  }
+  toast.dismiss(toastId)
+  return result
+}
 
 export const createRating = async (data, token) => {
   const toastId = toast.loading("Loading...")
