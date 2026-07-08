@@ -1,8 +1,7 @@
 import React, { useEffect, useRef, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
-import "video-react/dist/video-react.css"
 import { useLocation } from "react-router-dom"
-import { BigPlayButton, Player } from "video-react"
+import ReactPlayer from "react-player"
 import { markLectureAsComplete } from "../../../services/operations/courseDetailsAPI"
 import IconBtn from "../../common/IconBtn"
 import { useAuthStore,useViewCourseStore } from "../../../store/useStore"
@@ -174,22 +173,26 @@ const completedLectures = useViewCourseStore(
 
   return (
     <div className="flex flex-col gap-5 text-white">
-      {!videoData ? (
-        <img
-          src={previewSource}
-          alt="Preview"
-          className="h-full w-full rounded-md object-cover"
-        />
+      {!videoData?.videoUrl ? (
+        previewSource ? (
+          <img
+            src={previewSource}
+            alt="Preview"
+            className="h-full w-full rounded-md object-cover"
+          />
+        ) : null
       ) : (
-        <Player
-          ref={playerRef}
-          aspectRatio="16:9"
-          playsInline
-          onEnded={() => setVideoEnded(true)}
-          src={videoData?.videoUrl}
-        >
-          <BigPlayButton position="center" />
-          {/* Render When Video Ends */}
+        <div className="relative">
+          <ReactPlayer
+            ref={playerRef}
+            url={videoData?.videoUrl}
+            controls
+            width="100%"
+            height="100%"
+            onEnded={() => setVideoEnded(true)}
+            light={previewSource || false}
+          />
+
           {videoEnded && (
             <div
               style={{
@@ -209,9 +212,8 @@ const completedLectures = useViewCourseStore(
               <IconBtn
                 disabled={loading}
                 onclick={() => {
-                  if (playerRef?.current) {
-                    // set the current time of the video to 0
-                    playerRef?.current?.seek(0)
+                  if (playerRef?.current && playerRef.current.seekTo) {
+                    playerRef.current.seekTo(0)
                     setVideoEnded(false)
                   }
                 }}
@@ -240,7 +242,7 @@ const completedLectures = useViewCourseStore(
               </div>
             </div>
           )}
-        </Player>
+        </div>
       )}
 
       <h1 className="mt-4 text-3xl font-semibold">{videoData?.title}</h1>

@@ -16,15 +16,21 @@ export default function ViewCourse() {
 
   useEffect(() => {
     ;(async () => {
-      const courseData = await getFullDetailsOfCourse(courseId, token)
-    setCourseSectionData(courseData.courseDetails.courseContent)
-    setEntireCourseData(courseData.courseDetails)
-    setCompletedLectures(courseData.completedVideos)
-      let lectures = 0
-      courseData?.courseDetails?.courseContent?.forEach((sec) => {
-        lectures += sec.subSection.length
-      })
-      setTotalNoOfLectures(lectures)
+      try {
+        const courseData = await getFullDetailsOfCourse(courseId, token)
+        if (!courseData || !courseData.courseDetails) return
+        const courseContent = courseData.courseDetails.courseContent || []
+        setCourseSectionData(courseContent)
+        setEntireCourseData(courseData.courseDetails)
+        setCompletedLectures(courseData.completedVideos || [])
+        let lectures = 0
+        courseContent.forEach((sec) => {
+          lectures += sec.subSection?.length || 0
+        })
+        setTotalNoOfLectures(lectures)
+      } catch (error) {
+        console.error("Failed to load course details", error)
+      }
     })()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])

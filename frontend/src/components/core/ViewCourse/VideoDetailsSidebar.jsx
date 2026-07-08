@@ -11,17 +11,10 @@ export default function VideoDetailsSidebar({ setReviewModal }) {
   const navigate = useNavigate()
   const location = useLocation()
   const { sectionId, subSectionId } = useParams()
- const {
-  courseSectionData,
-  courseEntireData,
-  totalNoOfLectures,
-  completedLectures,
-} = useViewCourseStore((state) => ({
-  courseSectionData: state.courseSectionData,
-  courseEntireData: state.courseEntireData,
-  totalNoOfLectures: state.totalNoOfLectures,
-  completedLectures: state.completedLectures,
-}));
+const courseSectionData = useViewCourseStore((state) => state.courseSectionData);
+const courseEntireData = useViewCourseStore((state) => state.courseEntireData);
+const totalNoOfLectures = useViewCourseStore((state) => state.totalNoOfLectures);
+const completedLectures = useViewCourseStore((state) => state.completedLectures);
 
   useEffect(() => {
     ;(() => {

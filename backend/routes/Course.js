@@ -37,6 +37,11 @@ const {
   isAdmin,
 } = require("../middleware/auth");
 
+const {
+  updateCourseProgress
+} = require("../controllers/courseProgress");
+
+
 router.post("/createCourse", auth, isInstructor, createCourse);
 router.get("/getAllCourses", getAllCourses);
 router.get("/getCourseDetails", getCourseDetails);
@@ -60,4 +65,5 @@ router.post("/createRating", auth, isStudent, createRating);
 router.get("/getAverageRating", getAverageRating);
 router.get("/getReviews", getAllRatingReview);
 
+router.post("/updateCourseProgress", auth, isStudent, updateCourseProgress);
 module.exports = router;
