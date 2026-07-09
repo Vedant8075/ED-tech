@@ -23,32 +23,33 @@ const completedLectures = useViewCourseStore(
   (state) => state.completedLectures
 );
 
-  const [videoData, setVideoData] = useState([])
+  const [videoData, setVideoData] = useState(null)
   const [previewSource, setPreviewSource] = useState("")
   const [videoEnded, setVideoEnded] = useState(false)
   const [loading, setLoading] = useState(false)
 
   useEffect(() => {
-    ;(async () => {
+    ;(() => {
       if (!courseSectionData.length) return
-      if (!courseId && !sectionId && !subSectionId) {
+      if (!courseId || !sectionId || !subSectionId) {
         navigate(`/dashboard/enrolled-courses`)
-      } else {
-        // console.log("courseSectionData", courseSectionData)
-        const filteredData = courseSectionData.filter(
-          (course) => course._id === sectionId
-        )
-        // console.log("filteredData", filteredData)
-        const filteredVideoData = filteredData?.[0]?.subSection.filter(
-          (data) => data._id === subSectionId
-        )
-        // console.log("filteredVideoData", filteredVideoData)
-        setVideoData(filteredVideoData[0])
-        setPreviewSource(courseEntireData.thumbnail)
-        setVideoEnded(false)
+        return
       }
+
+      const currentSection = courseSectionData.find(
+        (course) => course._id === sectionId
+      )
+      const currentSubSection = currentSection?.subSection?.find(
+        (data) => data._id === subSectionId
+      )
+
+      if (!currentSubSection) return
+
+      setVideoData(currentSubSection)
+      setPreviewSource(courseEntireData?.thumbnail || "")
+      setVideoEnded(false)
     })()
-  }, [courseSectionData, courseEntireData, location.pathname])
+  }, [courseSectionData, courseEntireData, location.pathname, courseId, sectionId, subSectionId, navigate])
 
   // check if the lecture is the first video of the course
   const isFirstVideo = () => {
@@ -182,6 +183,7 @@ const completedLectures = useViewCourseStore(
       ) : (
         <div className="relative">
           <ReactPlayer
+            key={videoData?.videoUrl}
             ref={playerRef}
             url={videoData?.videoUrl}
             controls

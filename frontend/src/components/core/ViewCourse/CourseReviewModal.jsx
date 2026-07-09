@@ -2,14 +2,13 @@ import { useEffect } from "react"
 import { useForm } from "react-hook-form"
 import { RxCross2 } from "react-icons/rx"
 import ReactStars from "react-rating-stars-component"
-import { useAuthStore,useProfileStore,useViewCourseStore } from "../../../store/useStore"
 import { createRating } from "../../../services/operations/courseDetailsAPI"
 import IconBtn from "../../common/IconBtn"
-
+import { useAuthStore,useProfileStore,useViewCourseStore } from "../../../store/useStore"
 export default function CourseReviewModal({ setReviewModal }) {
   const  user = useAuthStore((state) => state.user)
-  const token  = useProfileStore((state) => state.token)
-  const courseEntireData  = useViewCourseStore((state) => state.courseEntireData)
+  const token = useProfileStore((state) => state.token)
+  const courseEntireData = useViewCourseStore((state) => state.courseEntireData)
 
   const {
     register,

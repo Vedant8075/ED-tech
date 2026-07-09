@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react"
 import { BiDotsVerticalRounded } from "react-icons/bi"
-
 import { useNavigate } from "react-router-dom"
 import {useAuthStore} from "../../../store/useStore"
 import { getUserEnrolledCourses } from "../../../services/operations/profileAPI"
