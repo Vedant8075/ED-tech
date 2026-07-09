@@ -39,21 +39,20 @@ export default function ChangeProfilePicture() {
   const handleFileUpload = async () => {
     try {
       if (!imageFile) return
-      
+
       setLoading(true)
       const formData = new FormData()
       formData.append("displayPicture", imageFile)
 
       const response = await updateDisplayPicture(token, formData)
-      
-      if (response) {
-      
-        setUser(response.updatedUserDetails) 
+
+      if (response?.data) {
+        setUser(response.data)
       }
-      setLoading(false)
     } catch (error) {
-      setLoading(false)
       console.log("ERROR MESSAGE - ", error.message)
+    } finally {
+      setLoading(false)
     }
   }
 

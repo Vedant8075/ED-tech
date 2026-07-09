@@ -3,6 +3,7 @@ const Profile = require("../models/Profile");
 const Course = require("../models/Course");
 const { convertSecondsToDuration } = require("../utils/secToDuration")
 const CourseProgress = require("../models/CourseProgress")
+const { uploadImageToCloudinary } = require("../utils/imageUploader")
 
 
 exports.updateProfile = async (req, res) => {
@@ -105,26 +106,43 @@ exports.getAllUserDetails = async (req, res) => {
 
 exports.updateDisplayPicture = async (req, res) => {
   try {
-    const displayPicture = req.files.displayPicture
+    const displayPicture = req.files?.displayPicture
     const userId = req.user.id
+
+    if (!displayPicture) {
+      return res.status(400).json({
+        success: false,
+        message: "Please provide a display picture",
+      })
+    }
+
     const image = await uploadImageToCloudinary(
       displayPicture,
       process.env.FOLDER_NAME,
       1000,
       1000
     )
-    console.log(image)
+
     const updatedProfile = await User.findByIdAndUpdate(
       { _id: userId },
       { image: image.secure_url },
       { new: true }
     )
-    res.send({
+
+    if (!updatedProfile) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found",
+      })
+    }
+
+    return res.status(200).json({
       success: true,
-      message: `Image Updated successfully`,
+      message: "Image updated successfully",
       data: updatedProfile,
     })
   } catch (error) {
+    console.error("Error updating display picture:", error)
     return res.status(500).json({
       success: false,
       message: error.message,

@@ -29,17 +29,20 @@ export async function updateDisplayPicture(token, formData) {
       response
     )
 
-    if (!response.data.success) {
-      throw new Error(response.data.message)
+    if (!response?.data?.success) {
+      throw new Error(response?.data?.message || "Could not update display picture")
     }
-    toast.success("Display Picture Updated Successfully")
-    
+
     useProfileStore.getState().setUser(response.data.data)
+    toast.success("Display Picture Updated Successfully")
+    return response.data
   } catch (error) {
     console.log("UPDATE_DISPLAY_PICTURE_API API ERROR............", error)
     toast.error("Could Not Update Display Picture")
+    return null
+  } finally {
+    toast.dismiss(toastId)
   }
-  toast.dismiss(toastId)
 }
 
 export async function updateProfile(token, formData) {

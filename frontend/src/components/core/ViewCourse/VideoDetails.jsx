@@ -174,13 +174,11 @@ const completedLectures = useViewCourseStore(
   return (
     <div className="flex flex-col gap-5 text-white">
       {!videoData?.videoUrl ? (
-        previewSource ? (
-          <img
-            src={previewSource}
-            alt="Preview"
-            className="h-full w-full rounded-md object-cover"
-          />
-        ) : null
+        <img
+          src={previewSource}
+          alt="Preview"
+          className="h-full w-full rounded-md object-cover"
+        />
       ) : (
         <div className="relative">
           <ReactPlayer
