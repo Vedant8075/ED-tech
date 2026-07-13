@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form"
 import { RxCross2 } from "react-icons/rx"
 import ReactStars from "react-rating-stars-component"
 import { createRating } from "../../../services/operations/courseDetailsAPI"
-import IconBtn from "../../common/IconBtn"
+import IconBtn from "../../Common/IconBtn"
 import { useAuthStore,useProfileStore,useViewCourseStore } from "../../../store/useStore"
 export default function CourseReviewModal({ setReviewModal }) {
   const  user = useAuthStore((state) => state.user)
