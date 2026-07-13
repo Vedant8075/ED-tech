@@ -6,7 +6,7 @@ import { useCartStore } from "../../../../store/useStore"
 export default function RenderCartCourses() {
   const  cart = useCartStore((state) => (state.cart))
   const removeFromCart= useCartStore((state)=>(state.removeFromCart));
-  console.log(cart)
+  // cart logged in dev only when needed
   return (
     <div className="flex flex-1 flex-col">
       {cart.map((course, indx) => (

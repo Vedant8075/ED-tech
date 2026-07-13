@@ -24,10 +24,7 @@ export async function updateDisplayPicture(token, formData) {
         Authorization: `Bearer ${token}`,
       }
     )
-    console.log(
-      "UPDATE_DISPLAY_PICTURE_API API RESPONSE............",
-      response
-    )
+    // response logged in dev only when needed
 
     if (!response?.data?.success) {
       throw new Error(response?.data?.message || "Could not update display picture")
@@ -51,7 +48,7 @@ export async function updateProfile(token, formData) {
     const response = await apiConnector("PUT", UPDATE_PROFILE_API, formData, {
       Authorization: `Bearer ${token}`,
     })
-    console.log("UPDATE_PROFILE_API API RESPONSE............", response)
+    // response logged in dev only when needed
 
     if (!response.data.success) {
       throw new Error(response.data.message)
@@ -86,12 +83,11 @@ export async function updateProfile(token, formData) {
 
 export async function changePassword(token, formData) {
   const toastId = toast.loading("Loading...")
-  console.log(formData)
   try {
     const response = await apiConnector("POST", CHANGE_PASSWORD_API, formData, {
       Authorization: `Bearer ${token}`,
     })
-    console.log("CHANGE_PASSWORD_API API RESPONSE............", response)
+    // response logged in dev only when needed
 
     if (!response.data.success) {
       throw new Error(response.data.message)
@@ -106,12 +102,11 @@ export async function changePassword(token, formData) {
 
 export async function deleteProfile(token, navigate) {
   const toastId = toast.loading("Loading...")
-  console.log(token)
   try {
     const response = await apiConnector("DELETE", DELETE_PROFILE_API, null, {
       Authorization: `Bearer ${token}`,
     })
-    console.log("DELETE_PROFILE_API API RESPONSE............", response)
+    // response logged in dev only when needed
 
     if (!response.data.success) {
       throw new Error(response.data.message)

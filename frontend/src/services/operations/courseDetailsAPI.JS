@@ -60,7 +60,6 @@ export const fetchCourseDetails = async (courseId) => {
       throw new Error(response.data.message)
     }
     result = response.data
-    console.log(result)
   } catch (error) {
     console.log("COURSE_DETAILS_API API ERROR............", error)
     result = error.response.data
@@ -108,7 +107,6 @@ export const addCourseDetails = async (data, token) => {
 
 export const editCourseDetails = async (data, token) => {
   let result = null
-  console.log(data)
   const toastId = toast.loading("Loading...")
   try {
     const response = await apiConnector("POST", EDIT_COURSE_API, data, {
@@ -171,7 +169,6 @@ export const createSubSection = async (data, token) => {
 export const updateSection = async (data, token) => {
   let result = null
   const toastId = toast.loading("Loading...")
-  console.log(data)
   try {
     const response = await apiConnector("PUT", UPDATE_SECTION_API, data, {
       Authorization: `Bearer ${token}`,

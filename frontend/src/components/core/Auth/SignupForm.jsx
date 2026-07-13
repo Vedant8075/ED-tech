@@ -57,7 +57,7 @@ function SignupForm() {
       accountType,
     }
     
-    console.log(signupData)
+    // signupData logged in dev only when needed
 
     // Setting signup data to state
     // To be used after otp verification

@@ -122,10 +122,9 @@ const categoryId = typeof data.courseCategory === 'object'
       const result = await editCourseDetails(formData, token)
       setLoading(false)
       
-      if (result) {
+        if (result) {
         setStep(2)
         setCourse(result)
-        console.log(result)
       }
     } else {
       toast.error("No changes made to the form")

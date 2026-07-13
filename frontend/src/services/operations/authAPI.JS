@@ -19,8 +19,7 @@ export async function sendOtp(email, navigate) {
       email,
       checkUserPresent: true,
     })
-    console.log("SENDOTP API RESPONSE............", response)
-    console.log(response.data.success)
+    // response logged in dev only when needed
 
     if (!response.data.success) {
       throw new Error(response.data.message)
@@ -59,9 +58,6 @@ export async function signUp(
       otp,
     })
 
-    
-    console.log("SIGNUP API RESPONSE............", response)
-
     if (!response.data.success) {
       throw new Error(response.data.message)
     }
@@ -86,7 +82,7 @@ export async function login(email, password, navigate) {
       password,
     })
 
-    console.log("LOGIN API RESPONSE............", response)
+    // response logged in dev only when needed
 
     if (!response.data.success) {
       throw new Error(response.data.message)
@@ -122,7 +118,7 @@ export async function getPasswordResetToken(email, setEmailSent) {
       email,
     })
 
-    console.log("RESETPASSTOKEN RESPONSE............", response)
+    // response logged in dev only when needed
 
     if (!response.data.success) {
       throw new Error(response.data.message)
@@ -148,7 +144,7 @@ export async function resetPassword(newPassword, confirmPassword, token, navigat
       token,
     })
 
-    console.log("RESETPASSWORD RESPONSE............", response)
+    // response logged in dev only when needed
 
     if (!response.data.success) {
       throw new Error(response.data.message)

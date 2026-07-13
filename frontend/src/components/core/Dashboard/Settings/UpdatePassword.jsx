@@ -24,7 +24,7 @@ export default function UpdatePassword() {
   const submitPasswordForm = async (data) => {
     try {
       const formData = { ...data, email: user?.email }
-      console.log("SENDING PASSWORD DATA:", formData)
+      // password form data logged in dev only when needed
       
       await changePassword(token, formData)
     } catch (error) {

@@ -28,9 +28,8 @@ function UpdatePassword() {
 
   const handleOnSubmit = (e) => {
     e.preventDefault()
-    console.log(e)
     const token = location.pathname.split("/").at(-1);
-    console.log(newPassword,confirmPassword,token)
+    // form submission data logged in dev only when needed
     resetPassword(newPassword, confirmPassword, token, navigate)
   }
 
