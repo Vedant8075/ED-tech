@@ -20,14 +20,23 @@ database();
 
 app.use(express.json());
 app.use(cookieParser());
-app.use(
-  cors({
-    origin: "http://localhost:5173",
-    credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type", "Authorization","categoryid"]
-  }),
-);
+// CORS configuration: allow specific frontend or enable reflection/all for troubleshooting
+const corsOptions = {
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization", "categoryid"],
+};
+
+// If ALLOW_ALL_CORS=true, reflect the request origin (useful for debugging/dev).
+if (process.env.ALLOW_ALL_CORS === "true") {
+  corsOptions.origin = true; // reflect origin
+} else if (process.env.FRONTEND_URL) {
+  corsOptions.origin = process.env.FRONTEND_URL;
+} else {
+  corsOptions.origin = "http://localhost:5173";
+}
+
+app.use(cors(corsOptions));
 app.use(
   fileUpload({
     useTempFiles: true,
