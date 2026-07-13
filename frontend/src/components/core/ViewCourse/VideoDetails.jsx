@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom"
 import { useLocation } from "react-router-dom"
 import ReactPlayer from "react-player"
 import { markLectureAsComplete } from "../../../services/operations/courseDetailsAPI"
-import IconBtn from "../../common/IconBtn"
+import IconBtn from "../../Common/IconBtn"
 import { useAuthStore,useViewCourseStore } from "../../../store/useStore"
 const VideoDetails = () => {
   const { courseId, sectionId, subSectionId } = useParams()

@@ -3,7 +3,7 @@ import { BsChevronDown } from "react-icons/bs"
 import { IoIosArrowBack } from "react-icons/io"
 import { useLocation, useNavigate, useParams } from "react-router-dom"
 import { useViewCourseStore } from "../../../store/useStore"
-import IconBtn from "../../common/IconBtn"
+import IconBtn from "../../Common/IconBtn"
 
 export default function VideoDetailsSidebar({ setReviewModal }) {
   const [activeStatus, setActiveStatus] = useState("")
