@@ -14,7 +14,11 @@ export const useAuthStore = create(
       setToken: (token) => set({ token }),
     }),
     {
-      name: "auth-storage", 
+      name: "auth-storage",
+      partialize: (state) => ({
+        signupData: state.signupData,
+        token: state.token,
+      }),
     }
   )
 );
@@ -30,6 +34,9 @@ export const useProfileStore = create(
     }),
     {
       name: "profile-storage",
+      partialize: (state) => ({
+        user: state.user,
+      }),
     }
   )
 );
