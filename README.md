@@ -210,151 +210,200 @@ MongoDB Atlas         Cloudinary            Razorpay
 # 📂 Project Structure
 
 ```text
-StudyNotion/
-│
-├── backend/                        # Express.js Backend
-│   │
-│   ├── config/                     # Third-party service configurations
-│   │   ├── cloudinary.js           # Cloudinary configuration
-│   │   ├── database.js             # MongoDB connection
-│   │   └── razorpay.js             # Razorpay configuration
-│   │
-│   ├── controllers/                # Business logic for all API routes
-│   │   ├── Auth.js
-│   │   ├── Category.js
-│   │   ├── ContactUs.js
-│   │   ├── Course.js
-│   │   ├── Payment.js
-│   │   ├── Profile.js
-│   │   ├── RatingAndReviews.js
-│   │   ├── ResetPassword.js
-│   │   ├── Section.js
-│   │   └── SubSection.js
-│   │
-│   ├── middleware/                 # Custom middleware
-│   │   └── auth.js                 # JWT & Role Authorization
-│   │
-│   ├── mail/                       # Email Templates
-│   │   ├── contactFormRes.js
-│   │   ├── courseEnrollmentEmail.js
-│   │   ├── emailVerification.js
-│   │   ├── passwordUpdate.js
-│   │   └── paymentSuccessEmail.js
-│   │
-│   ├── models/                     # Mongoose Models
-│   │   ├── Category.js
-│   │   ├── Course.js
-│   │   ├── CourseProgress.js
-│   │   ├── OTP.js
-│   │   ├── Profile.js
-│   │   ├── RatingAndReviews.js
-│   │   ├── Section.js
-│   │   ├── SubSection.js
-│   │   ├── Tags.js
-│   │   └── User.js
-│   │
-│   ├── routes/                     # API Route Definitions
-│   │   ├── Contact.js
-│   │   ├── Course.js
-│   │   ├── Payments.js
-│   │   ├── profile.js
-│   │   └── user.js
-│   │
-│   ├── utils/                      # Utility Functions
-│   │   ├── imageUploader.js
-│   │   ├── mailSender.js
-│   │   └── secToDuration.js
-│   │
-│   ├── .env                        # Environment Variables
-│   ├── package.json
-│   └── server.js                   # Backend Entry Point
-│
-│
-├── frontend/                       # React Frontend
-│   │
-│   ├── public/
-│   │
-│   ├── src/
-│   │   │
-│   │   ├── assets/                 # Images, Logos & Static Files
-│   │   │   ├── Images/
-│   │   │   ├── Logo/
-│   │   │   └── TimeLineLogo/
-│   │   │
-│   │   ├── components/
-│   │   │   │
-│   │   │   ├── Common/             # Shared Components
-│   │   │   │   ├── Navbar.jsx
-│   │   │   │   ├── Footer.jsx
-│   │   │   │   ├── ConfirmationModal.jsx
-│   │   │   │   ├── RatingStars.jsx
-│   │   │   │   ├── ReviewSlider.jsx
-│   │   │   │   ├── IconBtn.jsx
-│   │   │   │   └── Tab.jsx
-│   │   │   │
-│   │   │   └── core/               # Feature-wise Components
-│   │   │       ├── AboutPage/
-│   │   │       ├── Auth/
-│   │   │       ├── Catalog/
-│   │   │       ├── ContactUsPage/
-│   │   │       ├── Course/
-│   │   │       ├── Dashboard/
-│   │   │       └── HomePage/
-│   │   │
-│   │   ├── data/                   # Static Data
-│   │   │   ├── countrycode.json
-│   │   │   ├── dashboard-links.js
-│   │   │   ├── footer-links.js
-│   │   │   ├── homepage-explore.js
-│   │   │   └── navbar-links.js
-│   │   │
-│   │   ├── hooks/                  # Custom React Hooks
-│   │   │   └── useOnClickOutside.js
-│   │   │
-│   │   ├── pages/                  # Route Components
-│   │   │   ├── Home.jsx
-│   │   │   ├── About.jsx
-│   │   │   ├── Catalog.jsx
-│   │   │   ├── CourseDetails.jsx
-│   │   │   ├── Dashboard.jsx
-│   │   │   ├── Signup.jsx
-│   │   │   ├── Login.jsx
-│   │   │   ├── VerifyEmail.jsx
-│   │   │   ├── ForgotPassword.jsx
-│   │   │   ├── UpdatePassword.jsx
-│   │   │   └── Error.jsx
-│   │   │
-│   │   ├── services/               # API Integration Layer
-│   │   │   ├── apiConnector.js
-│   │   │   ├── apis.js
-│   │   │   ├── formatDate.js
-│   │   │   └── operations/
-│   │   │       ├── authAPI.js
-│   │   │       ├── courseDetailsAPI.js
-│   │   │       ├── pageAndComponentData.js
-│   │   │       ├── profileAPI.js
-│   │   │       ├── SettingsAPI.js
-│   │   │       └── studentFeaturesAPI.js
-│   │   │
-│   │   ├── store/                  # Redux Store Configuration
-│   │   │   └── useStore.js
-│   │   │
-│   │   ├── utils/                  # Utility Functions
-│   │   │   ├── avgRating.js
-│   │   │   ├── constants.js
-│   │   │   └── dateFormatter.jsx
-│   │   │
-│   │   ├── App.jsx                 # Root Component
-│   │   ├── main.jsx                # React Entry Point
-│   │   └── App.css
-│   │
-│   ├── .env
-│   ├── package.json
-│   └── vite.config.js
-│
-├── README.md
-├── .gitignore
-└── package.json
+Directory structure:
+└── vedant8075-ed-tech/
+    ├── README.md
+    ├── backend/
+    │   ├── index.js
+    │   ├── package.json
+    │   ├── config/
+    │   │   ├── cloudinary.js
+    │   │   ├── database.js
+    │   │   └── razorpay.js
+    │   ├── controllers/
+    │   │   ├── Auth.js
+    │   │   ├── Category.js
+    │   │   ├── ContactUs.js
+    │   │   ├── Course.js
+    │   │   ├── courseProgress.js
+    │   │   ├── Payment.js
+    │   │   ├── Profile.js
+    │   │   ├── RatingAndReviews.js
+    │   │   ├── ResetPassword.js
+    │   │   ├── Section.js
+    │   │   └── SubSection.js
+    │   ├── mail/
+    │   │   ├── contactFormRes.js
+    │   │   ├── courseEnrollmentEmail.js
+    │   │   ├── emailVerification.js
+    │   │   ├── passwordUpdate.js
+    │   │   └── paymentSuccessEmail.js
+    │   ├── middleware/
+    │   │   └── auth.js
+    │   ├── models/
+    │   │   ├── Category.js
+    │   │   ├── Course.js
+    │   │   ├── CourseProgress.js
+    │   │   ├── OTP.js
+    │   │   ├── Profile.js
+    │   │   ├── RatingAndReviews.js
+    │   │   ├── Section.js
+    │   │   ├── SubSection.js
+    │   │   ├── Tags.js
+    │   │   └── User.js
+    │   ├── routes/
+    │   │   ├── Contact.js
+    │   │   ├── Course.js
+    │   │   ├── Payments.js
+    │   │   ├── profile.js
+    │   │   └── user.js
+    │   └── utils/
+    │       ├── imageUploader.js
+    │       ├── mailSender.js
+    │       └── secToDuration.js
+    └── frontend/
+        ├── README.md
+        ├── eslint.config.js
+        ├── index.html
+        ├── package.json
+        ├── prettier.config.js
+        ├── vite.config.js
+        ├── .editorconfig
+        ├── .npmrc
+        └── src/
+            ├── App.css
+            ├── App.jsx
+            ├── main.jsx
+            ├── assets/
+            │   └── Images/
+            │       ├── aboutus1.webp
+            │       ├── aboutus2.webp
+            │       ├── aboutus3.webp
+            │       ├── login.webp
+            │       └── signup.webp
+            ├── components/
+            │   ├── Common/
+            │   │   ├── ConfirmationModal.jsx
+            │   │   ├── Footer.jsx
+            │   │   ├── IconBtn.jsx
+            │   │   ├── Navbar.jsx
+            │   │   ├── RatingStars.jsx
+            │   │   ├── ReviewSlider.jsx
+            │   │   └── Tab.jsx
+            │   ├── ContactPage/
+            │   │   ├── ContactDetails.jsx
+            │   │   ├── ContactForm.jsx
+            │   │   └── ContactUsForm.jsx
+            │   └── core/
+            │       ├── AboutPage/
+            │       │   ├── ContactFormSection.jsx
+            │       │   ├── LearningGrid.jsx
+            │       │   ├── Quote.jsx
+            │       │   └── Stats.jsx
+            │       ├── Auth/
+            │       │   ├── LoginForm.jsx
+            │       │   ├── OpenRoute.jsx
+            │       │   ├── PrivateRoute.jsx
+            │       │   ├── ProfileDropdown.jsx
+            │       │   ├── SignupForm.jsx
+            │       │   └── Template.jsx
+            │       ├── Catalog/
+            │       │   ├── Course_Card.jsx
+            │       │   └── Course_Slider.jsx
+            │       ├── Course/
+            │       │   ├── CourseAccordionBar.jsx
+            │       │   ├── CourseDetailsCard.jsx
+            │       │   └── CourseSubSectionAccordion.jsx
+            │       ├── Dashboard/
+            │       │   ├── EnrolledCourses.jsx
+            │       │   ├── MyCourses.jsx
+            │       │   ├── MyProfile.jsx
+            │       │   ├── Sidebar.jsx
+            │       │   ├── SidebarLink.jsx
+            │       │   ├── AddCourse/
+            │       │   │   ├── index.jsx
+            │       │   │   ├── RenderSteps.jsx
+            │       │   │   ├── Upload.jsx
+            │       │   │   ├── CourseBuilder/
+            │       │   │   │   ├── CourseBuilderForm.jsx
+            │       │   │   │   ├── NestedView.jsx
+            │       │   │   │   └── SubSectionModal.jsx
+            │       │   │   ├── CourseInformation/
+            │       │   │   │   ├── ChipInput.jsx
+            │       │   │   │   ├── CourseInformationForm.jsx
+            │       │   │   │   └── RequirementsField.jsx
+            │       │   │   └── PublishCourse/
+            │       │   │       └── index.jsx
+            │       │   ├── Cart/
+            │       │   │   ├── index.jsx
+            │       │   │   ├── RenderCartCourses.jsx
+            │       │   │   └── ResetTotalAmount.jsx
+            │       │   ├── EditCourse/
+            │       │   │   └── index.jsx
+            │       │   ├── InstructorCourses/
+            │       │   │   └── CoursesTable.jsx
+            │       │   ├── InstructorDashboard/
+            │       │   │   ├── Instructor.jsx
+            │       │   │   └── InstructorChart.jsx
+            │       │   └── Settings/
+            │       │       ├── ChangeProfilePicture.jsx
+            │       │       ├── DeleteAccount.jsx
+            │       │       ├── EditProfile.jsx
+            │       │       ├── index.jsx
+            │       │       └── UpdatePassword.jsx
+            │       ├── HomePage/
+            │       │   ├── Button.jsx
+            │       │   ├── CodeBlocks.jsx
+            │       │   ├── CourseCard.jsx
+            │       │   ├── ExploreMore.jsx
+            │       │   ├── HighlightText.jsx
+            │       │   ├── InstructorSection.jsx
+            │       │   ├── LearningLanguageSection.jsx
+            │       │   └── Timeline.jsx
+            │       └── ViewCourse/
+            │           ├── CourseReviewModal.jsx
+            │           ├── VideoDetails.jsx
+            │           └── VideoDetailsSidebar.jsx
+            ├── data/
+            │   ├── countrycode.json
+            │   ├── dashboard-links.js
+            │   ├── footer-links.js
+            │   ├── homepage-explore.js
+            │   └── navbar-links.js
+            ├── hooks/
+            │   └── useOnClickOutside.js
+            ├── pages/
+            │   ├── About.jsx
+            │   ├── Catalog.jsx
+            │   ├── Contact.jsx
+            │   ├── CourseDetails.jsx
+            │   ├── Dashboard.jsx
+            │   ├── Error.jsx
+            │   ├── ForgotPassword.jsx
+            │   ├── Home.jsx
+            │   ├── Login.jsx
+            │   ├── Signup.jsx
+            │   ├── UpdatePassword.jsx
+            │   ├── VerifyEmail.jsx
+            │   └── ViewCourse.jsx
+            ├── services/
+            │   ├── apiConnector.js
+            │   ├── apis.js
+            │   ├── formatDate.js
+            │   └── operations/
+            │       ├── authAPI.js
+            │       ├── courseDetailsAPI.js
+            │       ├── pageAndComponentData.js
+            │       ├── profileAPI.js
+            │       ├── SettingsAPI.js
+            │       └── studentFeaturesAPI.js
+            ├── store/
+            │   └── useStore.js
+            └── utils/
+                ├── avgRating.js
+                ├── constants.js
+                └── dateFormatter.jsx
+
 ```
 
 ---
